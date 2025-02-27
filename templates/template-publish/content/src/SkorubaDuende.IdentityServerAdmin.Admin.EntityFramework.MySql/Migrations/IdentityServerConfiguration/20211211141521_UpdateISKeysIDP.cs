@@ -14,8 +14,7 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 maxLength: 4000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "longtext CHARACTER SET utf8mb4",
-                oldMaxLength: 4000)
+                oldType: "longtext CHARACTER SET utf8mb4")
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
@@ -26,8 +25,7 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 maxLength: 4000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "longtext CHARACTER SET utf8mb4",
-                oldMaxLength: 4000)
+                oldType: "longtext CHARACTER SET utf8mb4")
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
@@ -63,7 +61,6 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 name: "Value",
                 table: "ClientSecrets",
                 type: "longtext CHARACTER SET utf8mb4",
-                maxLength: 4000,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "varchar(4000)",
@@ -75,7 +72,6 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 name: "Value",
                 table: "ApiResourceSecrets",
                 type: "longtext CHARACTER SET utf8mb4",
-                maxLength: 4000,
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "varchar(4000)",

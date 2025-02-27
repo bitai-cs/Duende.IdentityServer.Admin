@@ -196,8 +196,7 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
-                        .HasMaxLength(4000);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -560,8 +559,7 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
-                        .HasMaxLength(4000);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 

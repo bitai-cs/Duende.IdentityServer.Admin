@@ -7,6 +7,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.Entities.Id
 {
 	public class UserIdentity : IdentityUser
 	{
-		
+		public string UserDomain { get; set; }
 	}
 }

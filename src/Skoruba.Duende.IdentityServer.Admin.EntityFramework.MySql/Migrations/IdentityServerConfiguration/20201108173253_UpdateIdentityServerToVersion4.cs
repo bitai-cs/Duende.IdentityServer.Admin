@@ -411,7 +411,7 @@ FROM `ApiScopes`;");
                     Description = table.Column<string>(type: "varchar(1000) CHARACTER SET utf8mb4", maxLength: 1000, nullable: true),
                     Expiration = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Type = table.Column<string>(type: "varchar(250) CHARACTER SET utf8mb4", maxLength: 250, nullable: false),
-                    Value = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", maxLength: 4000, nullable: false)
+                    Value = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false)
                 },
                 constraints: table =>
                 {
