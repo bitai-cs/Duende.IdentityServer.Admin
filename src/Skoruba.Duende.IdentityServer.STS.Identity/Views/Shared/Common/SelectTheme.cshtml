@@ -20,7 +20,7 @@
               method="post" class="form-inline justify-content-end" role="form">
             <div class="form-group">
                 <label asp-for="@Context.Request.Cookies[ThemeHelpers.CookieThemeKey]" class="mr-2">@Localizer["Theme:"]</label>
-                <select name="theme" onchange="this.form.submit();" class="form-control" asp-for="@selectedTheme" asp-items="themes"></select>
+                <select name="theme" onchange="this.form.submit();" class="form-select form-select-sm" asp-for="@selectedTheme" asp-items="themes"></select>
             </div>
         </form>
     </div>
