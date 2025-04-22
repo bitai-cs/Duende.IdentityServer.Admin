@@ -126,6 +126,9 @@
   <data name="Discovery" xml:space="preserve">
     <value>Discovery Document</value>
   </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value />
+  </data>
   <data name="Grants" xml:space="preserve">
     <value>Consentements</value>
     <comment>Octrois persistants. Explicit mistake for clarity</comment>

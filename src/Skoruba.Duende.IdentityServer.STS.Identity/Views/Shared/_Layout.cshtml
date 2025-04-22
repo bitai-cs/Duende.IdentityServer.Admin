@@ -56,7 +56,6 @@
 <body>
     <header>
         <div class="container">
-            <!-- div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow text-center" -->
             <div class="menu border-bottom box-shadow container-fluid d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <!-- Logo -->
@@ -72,28 +71,24 @@
                     <div class="d-flex gap-2">
                         <!--Menu item -->
                         <div class="menu-item my-md-0 mr-md-3 dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                @Localizer["Settings"] - @name
+                            <button type="button" class="btn btn-primary btn-user-responsive  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @* @Localizer["Settings"] - *@
+                                @name
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                                <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
+                                <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
                                 @if (hasExternalLogins)
                                 {
                                     <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
-                                }
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
+                                }                                
                                 <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
+                                <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">@Localizer["Signout"]</a>
                             </div>
-                        </div>
-                        <a class="menu-item btn btn-secondary" asp-action="Logout" asp-controller="Account"><i class="fa fa-window-close"></i>@* @Localizer["Signout"] *@</a>                        
+                        </div>                        
                     </div>
-
-                    <!--Menu button - show in < MD -->
-                    <a class="my-2 btn btn-outline-primary menu-button" href="#">
-                        <span class="oi oi-menu" title="menu" aria-hidden="true"></span> @Localizer["Menu"]
-                    </a>
                 }                
             </div>
         </div>
@@ -146,6 +141,35 @@
         <script src="~/dist/js/Theme.js" asp-append-version="true"></script>
         <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>
     </environment>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userButton = document.querySelector('.btn-user-responsive');
+
+            function updateButtonSize() {
+                const screenWidth = window.innerWidth;
+
+                // Elimina todas las clases de tamaño
+                userButton.classList.remove('btn-sm', 'btn-lg');
+
+                // Breakpoints de Bootstrap 5 (en píxeles)
+                if (screenWidth < 768) { // xs y sm
+                    userButton.classList.add('btn-sm');
+                }
+                // else if (screenWidth >= 768 && screenWidth < 992) { // md
+                //     // No añade clase (tamaño estándar)
+                // }
+                // else { // lg y xl
+                //     userButton.classList.add('btn-lg');
+                // }
+            }
+
+            // Ejecuta al cargar
+            updateButtonSize();
+            // Asigna el control del evento
+            window.addEventListener('resize', updateButtonSize);
+        });
+    </script>
 
     @await RenderSectionAsync("scripts", required: false)
 </body>

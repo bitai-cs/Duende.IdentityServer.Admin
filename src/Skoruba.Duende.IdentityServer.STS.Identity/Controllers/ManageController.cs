@@ -242,7 +242,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DownloadPersonalData()
+        public async Task<ActionResult> DownloadPersonalData()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -255,8 +255,15 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
             var personalDataProps = typeof(TUser).GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
             var personalData = personalDataProps.ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");
 
-            Response.Headers.Append("Content-Disposition", "attachment; filename=PersonalData.json");
-            return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(personalData)), "text/json");
+            var jsonData = JsonConvert.SerializeObject(personalData, Formatting.Indented);
+            var bytes = Encoding.UTF8.GetBytes(jsonData);
+
+            var result = new FileContentResult(bytes, "application/json")
+            {
+                FileDownloadName = "PersonalData.json"
+            };
+
+            return result;
         }
 
         [HttpGet]

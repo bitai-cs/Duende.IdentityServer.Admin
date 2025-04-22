@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>&lt;h6&gt;1. Information We Collect&lt;/h6&gt; &lt;p class="font-monospace"&gt;When you use external authentication, we may receive and store:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Your first and last name&lt;/li&gt; &lt;li&gt;Email address&lt;/li&gt; &lt;li&gt;Unique identifier provided by the authentication provider&lt;/li&gt; &lt;li&gt;Basic profile information (as permitted by the provider)&lt;/li&gt; &lt;/ul&gt;  &lt;h6&gt;2. Use of Information&lt;/h6&gt; &lt;p class="font-monospace"&gt;We use this information to:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Provide and maintain the authentication service&lt;/li&gt; &lt;li&gt;Control access to our internal systems&lt;/li&gt; &lt;li&gt;Identify and authenticate users&lt;/li&gt; &lt;li&gt;Improve the security of our services&lt;/li&gt; &lt;/ul&gt;  &lt;h6&gt;3. Information Sharing&lt;/h6&gt; &lt;p class="font-monospace"&gt;We do not share your personal information with third parties except:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;When required by law&lt;/li&gt; &lt;li&gt;To protect our rights or property&lt;/li&gt; &lt;li&gt;In the event of a merger, acquisition, or asset sale&lt;/li&gt; &lt;/ul&gt;  &lt;h6&gt;4. Data Security&lt;/h6&gt; &lt;p class="font-monospace"&gt;We implement technical and organizational measures to protect your personal data from unauthorized access or alteration.&lt;/p&gt;  &lt;h6&gt;5. Data Retention&lt;/h6&gt; &lt;p class="font-monospace"&gt;We retain your information as long as it is necessary for the purposes described in this policy or as required by applicable law.&lt;/p&gt;  &lt;h6&gt;6. Your Rights&lt;/h6&gt; &lt;p class="font-monospace"&gt;You have the right to:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Request access to your personal data&lt;/li&gt; &lt;li&gt;Request correction of inaccurate data&lt;/li&gt; &lt;li&gt;Request deletion of your personal data&lt;/li&gt; &lt;li&gt;Object to the processing of your data&lt;/li&gt; &lt;/ul&gt;  &lt;h6&gt;7. Changes to this Policy&lt;/h6&gt; &lt;p class="font-monospace"&gt;We may update this policy from time to time. Updated versions will be posted on this site.&lt;/p&gt;  &lt;h6&gt;8. Contact&lt;/h6&gt; &lt;p class="font-monospace"&gt;For questions about this policy, please contact our privacy team at: privacidad@suempresa.com&lt;/p&gt;  &lt;p class="text-muted mt-3"&gt;&lt;small&gt;Last updated: April 14, 2025&lt;/small&gt;&lt;/p&gt;</value>
+    <comment/>
+  </data>
+</root>

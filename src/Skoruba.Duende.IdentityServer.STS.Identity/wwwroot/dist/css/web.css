@@ -1,31 +1,22 @@
 /*Common*/
 @media (max-width: 767px) {
-  .menu {
-    text-align: center;
-  }
   .menu-logo {
     font-size: 1.2em;
-  }
-  .menu-item {
-    display: none;
-  }
-  .menu-button {
-    display: block;
   }
   .welcome-block h1 {
     font-size: 2em;
   }
 }
 @media (min-width: 768px) {
-  .menu-item {
-    display: block;
+  /*.menu-item {
+  	display: block;
   }
   .menu-button {
-    display: none;
-  }
+  	display: none;
+  }*/
 }
 .gravatar-image {
-  max-width: none;
+  max-width: 40px;
 }
 
 .border-top {

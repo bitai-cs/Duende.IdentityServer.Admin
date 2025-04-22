@@ -54,13 +54,13 @@
     @await RenderSectionAsync("styles", required: false)
 </head>
 <body class="bg-body">
-    <header class="mb-md-2 mb-lg-4">
-        <div class="container text-center">
-            <div class="d-flex flex-column align-items-center menu border-bottom box-shadow">
-                <!-- Logo -->
-                <img class="img-fluid" alt="Logo" style="max-width: 80px;" src="@UrlHelper.Content(RootConfiguration.   AdminConfiguration.HomePageLogoUri)">
-                <!--Site name -->
-                <h3  class="menu-logo mb-3 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+    <header class="mb-2 mb-md-3 mb-lg-4 border-bottom box-shadow">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-center menu">
+                <img alt="Logo" style="max-width: 60px;" src="@UrlHelper.Content(RootConfiguration.   AdminConfiguration.HomePageLogoUri)">
+                <h5 class="menu-logo mt-2 font-weight-normal" style="max-width: 100px;">
+                    <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a>
+                </h5>
             </div>
         </div>
     </header>
@@ -96,7 +96,7 @@
         <script src="~/dist/js/Menu.js" asp-append-version="true"></script>
         <script src="~/dist/js/Language.js" asp-append-version="true"></script>
         <script src="~/dist/js/Theme.js" asp-append-version="true"></script>
-        <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>
+        <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>        
     </environment>
     <environment exclude="Development">
         @* <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script> *@
@@ -107,10 +107,10 @@
         <script src="~/dist/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/dist/js/cookieconsent.min.js" asp-append-version="true"></script>
         <script src="~/dist/js/holder.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Menu.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Language.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Theme.js" asp-append-version="true"></script>
-        <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>
+        <script src="~/dist/js/Menu.min.js" asp-append-version="true"></script>
+        <script src="~/dist/js/Language.min.js" asp-append-version="true"></script>
+        <script src="~/dist/js/Theme.min.js" asp-append-version="true"></script>
+        <script src="~/dist/js/CookieConsentHandler.min.js" asp-append-version="true"></script>
     </environment>
 
     @await RenderSectionAsync("scripts", required: false)

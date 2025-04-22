@@ -69,7 +69,7 @@ function copyNodeOpenIconicLibFonts(done) {
 		if (['.eot', '.otf', '.ttf', '.woff', '.woff2'].includes(ext)) {
 			// Copiar archivo al destino
 			fs.copyFileSync(path.join(src, file), path.join(dest, file));
-			console.log(`Archivo copiado: ${file}`);
+			console.log(`Copied font: ${file}`);
 		}
 	});
 
@@ -92,7 +92,7 @@ function copyNodeAwesomeLibFonts(done) {
 		if (['.eot', '.otf', '.ttf', '.woff', '.woff2'].includes(ext)) {
 			// Copiar archivo al destino
 			fs.copyFileSync(path.join(src, file), path.join(dest, file));
-			console.log(`Archivo copiado: ${file}`);
+			console.log(`Copied font: ${file}`);
 		}
 	});
 
@@ -121,15 +121,26 @@ function copyLibScriptsToDist() {
             './wwwroot/libs/cookieconsent/build/cookieconsent.min.js',
 
 			'./wwwroot/libs/holderjs/holder.js',
-			'./wwwroot/libs/holderjs/holder.min.js',
-
-			'./Scripts/App/components/Menu.js',
-			'./Scripts/App/components/Language.js',
-            './Scripts/App/components/Theme.js',
-            './Scripts/App/components/CookieConsentHandler.js'
+			'./wwwroot/libs/holderjs/holder.min.js'
 		])
 		.pipe(gulp.dest(jsFolder))
-		.pipe(debug({title: 'Copy file:'}));
+		.pipe(debug({title: 'Copied file:'}));
+}
+
+function copyAppScriptsToDist() {
+	return gulp
+		.src([
+			'./Scripts/App/components/Menu.js',
+			'./Scripts/App/components/Language.js',
+			'./Scripts/App/components/Theme.js',
+			'./Scripts/App/components/CookieConsentHandler.js',
+
+			'./Scripts/App/pages/account_login.js',
+			'./Scripts/App/pages/account_register.js',
+			'./Scripts/App/pages/account_forgotpassword.js'
+		])
+		.pipe(gulp.dest(jsFolder))
+		.pipe(debug({ title: 'Copied file:' }));
 }
 
 function copyLibFontsToDist(done) {
@@ -143,11 +154,9 @@ function copyLibFontsToDist(done) {
 
 	// Leer los archivos de la carpeta de origen
 	fs.readdirSync(src).forEach(file => {
-		//const ext = path.extname(file);
-		//if (['.eot', '.otf', '.ttf', '.woff', '.woff2'].includes(ext)) {
 		//// Copiar archivo al destino
 		fs.copyFileSync(path.join(src, file), path.join(dest, file));
-		console.log(`Archivo copiado: ${file}`);
+		console.log(`Copied font: ${file}`);
 		//}
 	});
 
@@ -166,11 +175,9 @@ function copyLibWebfontsToDist(done) {
 
 	// Leer los archivos de la carpeta de origen
 	fs.readdirSync(src).forEach(file => {
-		//const ext = path.extname(file);
-		//if (['.eot', '.otf', '.ttf', '.woff', '.woff2'].includes(ext)) {
 		//// Copiar archivo al destino
 		fs.copyFileSync(path.join(src, file), path.join(dest, file));
-		console.log(`Archivo copiado: ${file}`);
+		console.log(`Copied font: ${file}`);
 		//}
 	});
 
@@ -200,14 +207,32 @@ function copyLibCssToDist() {
 			return path;
 		}))
 		.pipe(gulp.dest(cssFolder))
-		.pipe(debug({ title: 'Copy file:' }));
+		.pipe(debug({ title: 'Copied file:' }));
 }
 
 function copyLibThemesToDist() {
 	return gulp
 		.src('wwwroot/libs/bootswatch/**/bootstrap.min.css')
 		.pipe(gulp.dest(cssThemeFolder))
-		.pipe(debug({ title: 'Copy file:' }));
+		.pipe(debug({ title: 'Copied file:' }));
+}
+
+function minifyAppScripts() {
+    return gulp
+        .src([
+            './wwwroot/dist/js/Menu.js',
+            './wwwroot/dist/js/Language.js',
+			'./wwwroot/dist/js/Theme.js',
+            './wwwroot/dist/js/CookieConsentHandler.js',
+
+			'./wwwroot/dist/js/account_login.js',
+			'./wwwroot/dist/js/account_register.js',
+			'./wwwroot/dist/js/account_forgotpassword.js'
+        ])
+		.pipe(uglify())
+		.pipe(rename({ suffix: '.min' })) 
+		.pipe(gulp.dest(jsFolder))
+		.pipe(debug({ title: 'Minified file:' }));
 }
 
 function bundleScripts() {
@@ -227,7 +252,22 @@ function bundleScripts() {
 		])
 		.pipe(concat('bundle.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest(jsFolder));
+		.pipe(gulp.dest(jsFolder))
+		.pipe(debug({ title: 'Bundled scripts:' }));
+}
+
+function bundleLibStyles() {
+	return gulp
+		.src([
+			'./wwwroot/dist/css/bootstrap.css',
+			'./wwwroot/dist/css/open-iconic-bootstrap.css',
+			'./wwwroot/dist/css/fontawesome-all.css',
+			'./wwwroot/dist/css/cookieconsent.min.css'
+		])
+		.pipe(minifyCSS())
+		.pipe(concat('bundle.min.css'))
+		.pipe(gulp.dest(cssFolder))
+		.pipe(debug({ title: 'Bundled styles:' }));
 }
 
 function bundleAppSass() {
@@ -235,7 +275,8 @@ function bundleAppSass() {
 		.src('Styles/web.scss')
 		.pipe(sass())
 		.on('error', sass.logError)
-		.pipe(gulp.dest(cssFolder));
+		.pipe(gulp.dest(cssFolder))
+		.pipe(debug({ title: 'Bundled app sass:' }));
 }
 
 function bundelAppSassMin() {
@@ -245,42 +286,32 @@ function bundelAppSassMin() {
 		.on('error', sass.logError)
 		.pipe(minifyCSS())
 		.pipe(concat('web.min.css'))
-		.pipe(gulp.dest(cssFolder));
+		.pipe(gulp.dest(cssFolder))
+		.pipe(debug({ title: 'Bundled app sass minified:' }));
 }
 
-function bundleLibStyles() {
-	return gulp
-		.src([
-			'./wwwroot/dist/css/bootstrap.css',
-			'./wwwroot/dist/css/open-iconic-bootstrap.css',
-            './wwwroot/dist/css/fontawesome-all.css',
-            './wwwroot/dist/css/cookieconsent.min.css'
-		])
-		.pipe(minifyCSS())
-		.pipe(concat('bundle.min.css'))
-		.pipe(gulp.dest(cssFolder));
-}
-
-var initDist = gulp.series(copyNodeLibs, copyNodeAwesomeLibFonts, copyNodeOpenIconicLibFonts, copyLibScriptsToDist, copyLibCssToDist, copyLibFontsToDist, copyLibWebfontsToDist, copyLibThemesToDist);
+var initDist = gulp.series(copyAppScriptsToDist, copyLibScriptsToDist, copyLibCssToDist, copyLibFontsToDist, copyLibWebfontsToDist, copyLibThemesToDist);
 var bundleStyles = gulp.series(bundleLibStyles, bundleAppSass, bundelAppSassMin);
-var build = gulp.series(bundleStyles, bundleScripts);
+var build = gulp.series(minifyAppScripts, bundleStyles, bundleScripts);
 
 gulp.task('clean', processClean);
-gulp.task('copyNodeLibs', gulp.series(copyNodeLibs, copyNodeAwesomeLibFonts, copyNodeOpenIconicLibFonts));
-//gulp.task('copyNodeAwesomeLibFonts', copyNodeAwesomeLibFonts);
-//gulp.task('copyNodeOpenIconicLibFonts', copyNodeOpenIconicLibFonts);
+gulp.task('copy-node-dist', gulp.series(copyNodeLibs, copyNodeAwesomeLibFonts, copyNodeOpenIconicLibFonts));
+gulp.task('init-dist', initDist);
+gulp.task('build', build);
+gulp.task('default', build);
+
 gulp.task('styles', bundleStyles);
 gulp.task('sass', bundleAppSass);
 gulp.task('sass:min', bundelAppSassMin);
 gulp.task('fonts', gulp.series(copyLibFontsToDist, copyLibWebfontsToDist));
 gulp.task('scripts', bundleScripts);
-gulp.task('initDist', initDist);
-gulp.task('build', build);
-gulp.task('default', build);
 
 // watch
 function processWatch() {
-	gulp.watch(['Styles/**/*.scss'], bundleStyles);
+	gulp.watch([
+		'Styles/**/*.scss',
+		'Scripts/**/*.js'
+	], gulp.series(copyAppScriptsToDist, minifyAppScripts, bundleScripts, bundleStyles));
 }
 gulp.task('watch', processWatch);
 
