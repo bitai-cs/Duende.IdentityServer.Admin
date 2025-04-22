@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading;
 using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -113,6 +114,9 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button)
         {
+#if DEBUG
+            Thread.Sleep(3000);
+#endif
             // check if we are in the context of an authorization request
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
@@ -626,6 +630,9 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
+#if DEBUG
+            System.Threading.Thread.Sleep(3000);
+#endif
             if (!_registerConfiguration.Enabled) return View("RegisterFailure");
 
             returnUrl ??= Url.Content("~/");

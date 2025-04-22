@@ -126,6 +126,9 @@
   <data name="Discovery" xml:space="preserve">
     <value>Documento de descubrimiento</value>
   </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value>Acceso con tus Redes Sociales</value>
+  </data>
   <data name="Grants" xml:space="preserve">
     <value>Concesiones persistidas</value>
   </data>

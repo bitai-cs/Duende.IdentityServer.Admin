@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>&lt;h6&gt;1. Información que Recopilamos&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Cuando utiliza autenticación externa, podemos recibir y almacenar:&lt;/p&gt;     &lt;ul&gt;         &lt;li&gt;Su nombre y apellido&lt;/li&gt;         &lt;li&gt;Dirección de correo electrónico&lt;/li&gt;         &lt;li&gt;Identificador único proporcionado por el proveedor de autenticación&lt;/li&gt;         &lt;li&gt;Información básica de perfil (según lo permita el proveedor)&lt;/li&gt;     &lt;/ul&gt;      &lt;h6&gt;2. Uso de la Información&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Utilizamos esta información para:&lt;/p&gt;     &lt;ul&gt;         &lt;li&gt;Proveer y mantener el servicio de autenticación&lt;/li&gt;         &lt;li&gt;Controlar el acceso a nuestros sistemas internos&lt;/li&gt;         &lt;li&gt;Identificar y autenticar usuarios&lt;/li&gt;         &lt;li&gt;Mejorar la seguridad de nuestros servicios&lt;/li&gt;     &lt;/ul&gt;      &lt;h6&gt;3. Compartir Información&lt;/h6&gt;     &lt;p class="font-monospace"&gt;No compartimos su información personal con terceros, excepto:&lt;/p&gt;     &lt;ul&gt;         &lt;li&gt;Cuando sea requerido por ley&lt;/li&gt;         &lt;li&gt;Para proteger nuestros derechos o propiedad&lt;/li&gt;         &lt;li&gt;En caso de fusión, adquisición o venta de activos&lt;/li&gt;     &lt;/ul&gt;      &lt;h6&gt;4. Seguridad de Datos&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Implementamos medidas técnicas y organizativas para proteger sus datos personales contra accesos no autorizados o alteraciones.&lt;/p&gt;      &lt;h6&gt;5. Retención de Datos&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Conservamos su información mientras sea necesaria para los fines descritos en esta política o según lo requieran las leyes aplicables.&lt;/p&gt;      &lt;h6&gt;6. Sus Derechos&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Usted tiene derecho a:&lt;/p&gt;     &lt;ul&gt;         &lt;li&gt;Solicitar acceso a sus datos personales&lt;/li&gt;         &lt;li&gt;Solicitar corrección de datos inexactos&lt;/li&gt;         &lt;li&gt;Solicitar eliminación de sus datos personales&lt;/li&gt;         &lt;li&gt;Oponerse al procesamiento de sus datos&lt;/li&gt;     &lt;/ul&gt;      &lt;h6&gt;7. Cambios a esta Política&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Podemos actualizar esta política ocasionalmente. Las versiones actualizadas serán publicadas en este sitio.&lt;/p&gt;      &lt;h6&gt;8. Contacto&lt;/h6&gt;     &lt;p class="font-monospace"&gt;Para preguntas sobre esta política, contacte a nuestro equipo de privacidad en: privacidad@suempresa.com&lt;/p&gt;      &lt;p class="text-muted mt-3"&gt;&lt;small&gt;Última actualización: 14 abril del 2025&lt;/small&gt;&lt;/p&gt;</value>
+    <comment/>
+  </data>
+</root>

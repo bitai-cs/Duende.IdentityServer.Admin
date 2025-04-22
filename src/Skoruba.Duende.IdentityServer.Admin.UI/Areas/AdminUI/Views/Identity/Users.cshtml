@@ -11,20 +11,27 @@
     Layout = "_Layout";
 }
 
-<div class="row">
-    <div class="col-12 mb-3 text-center mt-1">
-        <h2><span class="oi oi-person" title="Users" aria-hidden="true"></span> @Localizer["Title"]</h2>
+@section styles {
+    <style>
+        
+        .gravatar-image {
+            max-width: 40px !important;
+        }
+
+    </style>
+}
+
+<div class="row mb-0">
+    <div class="col-12 text-center">
+        <h3><span class="oi oi-person" title="Users" aria-hidden="true"></span> @Localizer["Title"]</h3>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12">
+<div class="d-flex justify-content-between align-items-center">
+    <div>        
         <a asp-area="@CommonConsts.AdminUIArea" asp-action="UserProfile" class="btn btn-outline-primary mb-3 mt-3"><span class="oi oi-plus"></span> @Localizer["ActionAddUser"]</a>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
+    <div>
         @await Html.PartialAsync("Common/Search", new Search() { Action = "Users", Controller = "Identity" })
     </div>
 </div>
