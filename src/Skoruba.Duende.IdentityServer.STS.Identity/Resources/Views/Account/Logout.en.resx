@@ -124,6 +124,6 @@
     <value>Logout</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Yes, log out</value>
   </data>
 </root>

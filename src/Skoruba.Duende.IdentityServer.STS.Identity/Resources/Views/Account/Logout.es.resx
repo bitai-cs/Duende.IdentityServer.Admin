@@ -124,6 +124,6 @@
     <value>Cerrar sesión</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Si</value>
+    <value>Si, cerrar mi sesión</value>
   </data>
 </root>

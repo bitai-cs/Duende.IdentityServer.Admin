@@ -59,9 +59,11 @@
             <div class="menu border-bottom box-shadow container-fluid d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <!-- Logo -->
-                    <img class="img-fluid" alt="Logo" style="max-width: 80px;" src="@UrlHelper.Content(RootConfiguration.   AdminConfiguration.HomePageLogoUri)">
+                    <img class="logo-image" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)">
                     <!--Site name -->
-                    <h3 class="menu-logo ml-3 my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+                    <h1 class="logo-title ml-3 my-0 mr-md-auto font-weight-normal">
+                        <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a>
+                    </h1>
                 </div>
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
                 {           
