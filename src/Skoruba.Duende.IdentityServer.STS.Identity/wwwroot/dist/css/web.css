@@ -1,19 +1,76 @@
+@charset "UTF-8";
 /*Common*/
-@media (max-width: 767px) {
-  .menu-logo {
-    font-size: 1.2em;
+/* Extra Small (xs) - Ya lo tenías, incluido para completar el set */
+@media (max-width: 575px) {
+  .logo-image {
+    max-width: 90px;
+  }
+  .logo-title {
+    font-size: 1.4em;
   }
   .welcome-block h1 {
     font-size: 2em;
   }
 }
-@media (min-width: 768px) {
-  /*.menu-item {
-  	display: block;
+/* Small (sm) - >= 576px */
+@media (min-width: 576px) {
+  .logo-image {
+    max-width: 100px; /* Ejemplo de ajuste */
   }
-  .menu-button {
-  	display: none;
-  }*/
+  .logo-title {
+    font-size: 1.5em; /* Ejemplo de ajuste */
+  }
+  .welcome-block h1 {
+    font-size: 2.5em; /* Ejemplo de ajuste */
+  }
+}
+/* Medium (md) - >= 768px */
+@media (min-width: 768px) {
+  .logo-image {
+    max-width: 110px; /* Ejemplo de ajuste */
+  }
+  .logo-title {
+    font-size: 1.6em; /* Ejemplo de ajuste */
+  }
+  .welcome-block h1 {
+    font-size: 3em; /* Ejemplo de ajuste */
+  }
+}
+/* Large (lg) - >= 992px */
+@media (min-width: 992px) {
+  .logo-image {
+    max-width: 110px; /* Ejemplo de ajuste */
+  }
+  .logo-title {
+    font-size: 1.6em; /* Ejemplo de ajuste */
+  }
+  .welcome-block h1 {
+    font-size: 3.5em; /* Ejemplo de ajuste */
+  }
+}
+/* Extra Large (xl) - >= 1200px */
+@media (min-width: 1200px) {
+  .logo-image {
+    max-width: 110px; /* Ejemplo de ajuste */
+  }
+  .logo-title {
+    font-size: 1.6em; /* Ejemplo de ajuste */
+  }
+  .welcome-block h1 {
+    font-size: 4em; /* Ejemplo de ajuste */
+  }
+}
+/* Extra Extra Large (xxl) - >= 1400px */
+@media (min-width: 1400px) {
+  .logo-image {
+    max-width: 120px; /* Ejemplo de ajuste */
+  }
+  .logo-title {
+    font-size: 1.7em; /* Ejemplo de ajuste */
+  }
+  .welcome-block h1 {
+    font-size: 4.5em; /* Ejemplo de ajuste */
+  }
 }
 .gravatar-image {
   max-width: 40px;

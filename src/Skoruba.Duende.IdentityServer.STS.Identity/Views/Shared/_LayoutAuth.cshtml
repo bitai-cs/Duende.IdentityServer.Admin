@@ -57,10 +57,10 @@
     <header class="mb-2 mb-md-3 mb-lg-4 border-bottom box-shadow">
         <div class="container">
             <div class="d-flex align-items-center justify-content-center menu">
-                <img alt="Logo" style="max-width: 60px;" src="@UrlHelper.Content(RootConfiguration.   AdminConfiguration.HomePageLogoUri)">
-                <h5 class="menu-logo mt-2 font-weight-normal" style="max-width: 100px;">
+                <img class="logo-image" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)">
+                <h1 class="logo-title mt-2 font-weight-normal" style="max-width: 100px;">
                     <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a>
-                </h5>
+                </h1>
             </div>
         </div>
     </header>
@@ -70,14 +70,14 @@
 
         <footer class="mt-md-3 pt-3 pb-3 pt-md-4 pb-md-4 border-top">
             <div class="row">
-                <div class="col-6 col-lg-8 mt-2">
+                <div class="col-5 col-lg-8 mt-2">
                     @RootConfiguration.AdminConfiguration.PageTitle
                     <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
                 <div class="col-3 col-lg-2 text-right">
                     @await Html.PartialAsync("Common/SelectTheme")
                 </div>
-                <div class="col-3 col-lg-2 text-right">
+                <div class="col-4 col-lg-2 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
