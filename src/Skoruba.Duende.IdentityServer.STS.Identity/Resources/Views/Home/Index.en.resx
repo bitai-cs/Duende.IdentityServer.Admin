@@ -142,6 +142,6 @@
     <value>My profile</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Welcome to {0}</value>
+    <value>Welcome to {0}, this site allows you to securely and easily manage your digital identity. From here, you can register your personal information, change your password, configure two-step authentication, configure your access using your social networks, and more.</value>
   </data>
 </root>

@@ -121,7 +121,7 @@
     <value>Add authenticator app</value>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
-    <value>Authenticator app</value>
+    <value>Authenticator App</value>
   </data>
   <data name="BeforeLogin" xml:space="preserve">
     <value>before you can log in with a recovery code</value>
@@ -154,7 +154,7 @@
     <value>Setup authenticator app</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Two-factor authentication (2FA)</value>
+    <value>Two-factor Authentication (2FA)</value>
   </data>
   <data name="YouCanGenerateCodes" xml:space="preserve">
     <value>You can generate a new set of recovery codes</value>

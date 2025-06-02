@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Skoruba.Duende.IdentityServer.STS.Identity.Configuration.Interfaces;
 using Skoruba.Duende.IdentityServer.STS.Identity.Helpers;
 using Skoruba.Duende.IdentityServer.STS.Identity.Helpers.Localization;
 using Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Manage;
@@ -29,14 +30,14 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         private readonly ILogger<ManageController<TUser, TKey>> _logger;
         private readonly IGenericControllerLocalizer<ManageController<TUser, TKey>> _localizer;
         private readonly UrlEncoder _urlEncoder;
-
+        private readonly IRootConfiguration _rootConfiguration;
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IGenericControllerLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder)
+        public ManageController(UserManager<TUser> userManager, SignInManager<TUser> signInManager, IEmailSender emailSender, ILogger<ManageController<TUser, TKey>> logger, IGenericControllerLocalizer<ManageController<TUser, TKey>> localizer, UrlEncoder urlEncoder, Configuration.Interfaces.IRootConfiguration rootConfiguration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,6 +45,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
             _logger = logger;
             _localizer = localizer;
             _urlEncoder = urlEncoder;
+            _rootConfiguration = rootConfiguration;
         }
 
         [HttpGet]
@@ -543,7 +545,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EnableAuthenticator()
+        public async Task<IActionResult>EnableAuthenticator()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -712,7 +714,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("Skoruba.Duende.IdentityServer.STS.Identity"),
+                _urlEncoder.Encode(_rootConfiguration.AdminConfiguration.PageTitle),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

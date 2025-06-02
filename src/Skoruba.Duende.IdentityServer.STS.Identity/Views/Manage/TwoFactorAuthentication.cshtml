@@ -5,74 +5,111 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-<div class="row">
+<!-- Encabezado principal -->
+<div class="d-flex align-items-center mb-4">
+    <i class="fas fa-shield-alt fa-2x text-primary me-3"></i>
+    <h2 class="mb-0">@ViewData["Title"]</h2>
+</div>
 
-    <div class="col-12">
-        <h3>@ViewData["Title"]</h3>
+@if (Model.Is2faEnabled)
+{
+    @* <div class="col-12">
+        <div class="alert alert-danger">
+            <strong>@Localizer["NoCodes"]</strong>
+            <p>@Localizer["YouMust"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a> @Localizer["BeforeLogin"]</p>
+        </div>
     </div>
-
-    @if (Model.Is2faEnabled)
+    <div class="col-12">
+        <div class="alert alert-danger">
+            <strong>@Localizer["OneCode"]</strong>
+            <p>@Localizer["YouCanGenerateCodes"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="alert alert-warning">
+            <strong>@Localizer["YouHave"] @Model.RecoveryCodesLeft.ToString() @Localizer["RecoveryCodeLeft"]</strong>
+            <p>@Localizer["YouShould"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
+        </div>
+    </div> *@
+    if (Model.RecoveryCodesLeft == 0)
     {
-        if (Model.RecoveryCodesLeft == 0)
-        {
-            <div class="col-12">
-                <div class="alert alert-danger">
-                    <strong>@Localizer["NoCodes"]</strong>
-                    <p>@Localizer["YouMust"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a> @Localizer["BeforeLogin"]</p>
-                </div>
-            </div>
-        }
-        else if (Model.RecoveryCodesLeft == 1)
-        {
-            <div class="col-12">
-                <div class="alert alert-danger">
-                    <strong>@Localizer["OneCode"]</strong>
-                    <p>@Localizer["YouCanGenerateCodes"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
-                </div>
-            </div>
-        }
-        else if (Model.RecoveryCodesLeft <= 3)
-        {
-            <div class="col-12">
-                <div class="alert alert-warning">
-                    <strong>@Localizer["YouHave"] @Model.RecoveryCodesLeft.ToString() @Localizer["RecoveryCodeLeft"]</strong>
-                    <p>@Localizer["YouShould"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
-                </div>
-            </div>
-        }
-
-        if (Model.IsMachineRemembered)
-        {
-            <div class="col-12 mb-3">
-                <form method="post" asp-controller="Manage" asp-action="ForgetTwoFactorClient">
-                    <button type="submit" class="btn btn-info">@Localizer["ForgetBrowser"]</button>
-                </form>
-            </div>
-        }
-
         <div class="col-12">
-            <a asp-action="Disable2faWarning" class="btn btn-dark">@Localizer["Disable2FA"]</a>
-            <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-danger">@Localizer["ResetCodes"]</a>
+            <div class="alert alert-danger">
+                <strong>@Localizer["NoCodes"]</strong>
+                <p>@Localizer["YouMust"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a> @Localizer["BeforeLogin"]</p>
+            </div>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft == 1)
+    {
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <strong>@Localizer["OneCode"]</strong>
+                <p>@Localizer["YouCanGenerateCodes"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
+            </div>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft <= 3)
+    {
+        <div class="col-12">
+            <div class="alert alert-warning">
+                <strong>@Localizer["YouHave"] @Model.RecoveryCodesLeft.ToString() @Localizer["RecoveryCodeLeft"]</strong>
+                <p>@Localizer["YouShould"] <a asp-action="GenerateRecoveryCodes">@Localizer["GenerateNewCodes"]</a></p>
+            </div>
         </div>
     }
 
+    <!-- Tarjeta de estado 2FA -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-check-circle text-success me-2"></i>2FA Enabled</h5>
+            <span class="badge bg-success">Active</span>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Your account is protected with two-factor authentication. You can manage your settings below.</p>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+                <form method="post" class="d-inline" asp-controller="Manage" asp-action="ForgetTwoFactorClient">
+                    <button type="submit" class="btn btn-outline-info"><i class="fas fa-desktop me-2"></i>@Localizer["ForgetBrowser"]</button>
+                </form>
+                <a asp-action="Disable2faWarning" class="btn btn-outline-dark"><i class="fas fa-lock-open me-2"></i>@Localizer["Disable2FA"]</a>
+                <a asp-action="GenerateRecoveryCodesWarning" class="btn btn-outline-danger"><i class="fas fa-sync-alt me-2"></i>@Localizer["ResetCodes"]</a>                
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Tarjeta de aplicación autenticadora -->
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="fas fa-mobile-alt text-primary me-2"></i>@Localizer["AuthenticatorApp"]</h5>
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <p>Set up an authenticator app to generate verification codes. Even if you lose your phone, you'll be able to access your account using recovery codes.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="d-flex flex-md-column gap-2">
+                    @if (!Model.HasAuthenticator)
+                    {
+                        <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary"><i class="fas fa-qrcode me-2"></i>@Localizer["AddAuthenticator"]</a>
+                    }
+                    else
+                    {
+                        <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary"><i class="fas fa-qrcode me-2"></i>@Localizer["SetupAuthenticator"]</a>
+                        <a id="reset-authenticator" asp-action="ResetAuthenticatorWarning" class="btn btn-outline-danger"><i class="fas fa-redo me-2"></i>@Localizer["ResetAuthenticator"]</a>
+                    }                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-
-    <div class="col-12 mt-3">
-        <h4>@Localizer["AuthenticatorApp"]</h4>
-    </div>
-
-    <div class="col-12">
-        @if (!Model.HasAuthenticator)
-        {
-            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary">@Localizer["AddAuthenticator"]</a>
-        }
-        else
-        {
-            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary">@Localizer["SetupAuthenticator"]</a>
-            <a id="reset-authenticator" asp-action="ResetAuthenticatorWarning" class="btn btn-danger">@Localizer["ResetAuthenticator"]</a>
-        }
+<!-- Información adicional -->
+<div class="alert alert-info d-flex align-items-center mt-4">    
+    <div>
+        <h5 class="alert-heading"><i class="fas fa-info-circle fa-lg mt-1 me-3"></i>Security Tip</h5>
+        <p class="mb-0">For maximum security, we recommend keeping two-factor authentication enabled and periodically resetting your recovery codes.</p>
     </div>
 </div>
