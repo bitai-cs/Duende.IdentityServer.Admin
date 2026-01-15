@@ -136,11 +136,23 @@
   <data name="ScanQRSubTitle" xml:space="preserve">
     <value>dans votre application d'authentification à deux facteurs. Les espaces et la casse n'ont pas d'importance.</value>
   </data>
+  <data name="Step1" xml:space="preserve">
+    <value>Def</value>
+  </data>
+  <data name="Step2" xml:space="preserve">
+    <value>Step2</value>
+  </data>
+  <data name="Step3" xml:space="preserve">
+    <value>Step3</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Pour utiliser une application d'authentification, suivez les étapes suivantes :</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Configurer l'application d'authentification</value>
+  </data>
+  <data name="VerifCodePlaceholder" xml:space="preserve">
+    <value>VerifCodePlaceholder</value>
   </data>
   <data name="Verify" xml:space="preserve">
     <value>Vérifier</value>

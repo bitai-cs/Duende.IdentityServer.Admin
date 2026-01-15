@@ -117,8 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FAEnabled" xml:space="preserve">
+    <value>2FA Enabled</value>
+  </data>
+  <data name="2FAEnabledDescription" xml:space="preserve">
+    <value>Your account is protected with two-factor authentication. You can manage your settings below.</value>
+  </data>
   <data name="AddAuthenticator" xml:space="preserve">
     <value>Add authenticator app</value>
+  </data>
+  <data name="AuthAppDescription" xml:space="preserve">
+    <value>Set up an authenticator app to generate verification codes. Even if you lose your phone, you'll be able to access your account using recovery codes.</value>
+    <comment>AuthAppDescription</comment>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
     <value>Authenticator App</value>
@@ -149,6 +159,12 @@
   </data>
   <data name="ResetCodes" xml:space="preserve">
     <value>Reset recovery codes</value>
+  </data>
+  <data name="SecurityTip" xml:space="preserve">
+    <value>Security Tip</value>
+  </data>
+  <data name="SecurityTipDescription" xml:space="preserve">
+    <value>For maximum security, we recommend keeping two-factor authentication enabled and periodically resetting your recovery codes.</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
     <value>Setup authenticator app</value>

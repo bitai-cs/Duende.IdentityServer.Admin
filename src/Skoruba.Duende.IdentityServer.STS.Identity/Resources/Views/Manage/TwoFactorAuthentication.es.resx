@@ -117,8 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2FAEnabled" xml:space="preserve">
+    <value>2FA Habilitado</value>
+  </data>
+  <data name="2FAEnabledDescription" xml:space="preserve">
+    <value>Tu cuenta está protegida con autenticación de dos factores. Puedes gestionar tu configuración a continuación.</value>
+  </data>
   <data name="AddAuthenticator" xml:space="preserve">
     <value>Usar una App Autenticadora</value>
+  </data>
+  <data name="AuthAppDescription" xml:space="preserve">
+    <value>Configura una aplicación de autenticación para generar códigos de verificación. Incluso si pierdes tu teléfono, podrás acceder a tu cuenta utilizando los códigos de recuperación.</value>
+    <comment>AuthAppDescription</comment>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
     <value>App Autenticadora</value>
@@ -149,6 +159,12 @@
   </data>
   <data name="ResetCodes" xml:space="preserve">
     <value>Restablecer códigos de recuperación</value>
+  </data>
+  <data name="SecurityTip" xml:space="preserve">
+    <value>Concejo de Seguridad</value>
+  </data>
+  <data name="SecurityTipDescription" xml:space="preserve">
+    <value>Para una máxima seguridad, recomendamos mantener activada la autenticación de dos factores y restablecer periódicamente los códigos de recuperación.</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
     <value>Configurar app autenticadora</value>
