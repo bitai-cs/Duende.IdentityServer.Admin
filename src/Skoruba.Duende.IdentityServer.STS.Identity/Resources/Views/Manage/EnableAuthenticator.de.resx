@@ -136,11 +136,23 @@
   <data name="ScanQRSubTitle" xml:space="preserve">
     <value>in Ihre Zwei-Faktor-Authentifizierer-App. Leerzeichen und Gehäuse spielen keine Rolle.</value>
   </data>
+  <data name="Step1" xml:space="preserve">
+    <value>Def</value>
+  </data>
+  <data name="Step2" xml:space="preserve">
+    <value>Step2</value>
+  </data>
+  <data name="Step3" xml:space="preserve">
+    <value>Step3</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>Um eine Authentifizierungs-App zu verwenden, gehen Sie die folgenden Schritte durch:</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Konfigurieren der Authentifizierungs-App</value>
+  </data>
+  <data name="VerifCodePlaceholder" xml:space="preserve">
+    <value>VerifCodePlaceholder</value>
   </data>
   <data name="Verify" xml:space="preserve">
     <value>Verifizieren</value>

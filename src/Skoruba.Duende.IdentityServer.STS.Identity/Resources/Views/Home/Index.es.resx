@@ -142,6 +142,6 @@
     <value>Mi perfil</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Bienvenido a {0}</value>
+    <value>Bienvenido a {0}, este sitio te permite administrar de forma segura y sencilla tu identidad digital. Desde aquí podrás realizar el registro de tu información personal, cambiar tu contraseña, configurar tu autenticación de dos pasos, configurar tu acceso usando tus redes sociales, etc.</value>
   </data>
 </root>

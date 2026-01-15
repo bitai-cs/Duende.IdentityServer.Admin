@@ -136,6 +136,15 @@
   <data name="ScanQRSubTitle" xml:space="preserve">
     <value>into your two factor authenticator app. Spaces and casing do not matter.</value>
   </data>
+  <data name="Step1" xml:space="preserve">
+    <value>Authenticator App</value>
+  </data>
+  <data name="Step2" xml:space="preserve">
+    <value>Scan the QR Code</value>
+  </data>
+  <data name="Step3" xml:space="preserve">
+    <value>Confirmation Code</value>
+  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>To use an authenticator app go through the following steps:</value>
   </data>
@@ -144,5 +153,8 @@
   </data>
   <data name="Verify" xml:space="preserve">
     <value>Verify</value>
+  </data>
+  <data name="VerifCodePlaceholder" xml:space="preserve">
+    <value>Enter verification code here</value>
   </data>
 </root>

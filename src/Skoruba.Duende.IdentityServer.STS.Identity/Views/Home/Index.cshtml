@@ -13,11 +13,17 @@
     {
         Layout = "_LayoutAuth";
     }
+
+    bool _ddExistsAndIsTrue = false;
+    if (Context.Request.Query.ContainsKey("dd") && Context.Request.Query["dd"].ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+    {
+        _ddExistsAndIsTrue = true;
+    }
 }
 
-<div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<div class="welcome-block px-3 py-3 pb-md-4 mx-auto text-center">
     @*<h1 class="display-4"><img class="img-fluid" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)"><br />@RootConfiguration.AdminConfiguration.PageTitle</h1>*@
-    @* <p class="lead">@Localizer["SubTitle", RootConfiguration.AdminConfiguration.PageTitle]</p> *@
+    <p class="lead">@Localizer["SubTitle", RootConfiguration.AdminConfiguration.PageTitle]</p>
 </div>
 
 <div class="row justify-content-center">
@@ -123,20 +129,22 @@
                 </div>
             </div>
         </div>     
-}
+    }
 
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-        <div class="card mb-4 box-shadow text-center">
-            <div class="card-header">
-                <h5 class="my-0 font-weight-normal">@Localizer["Discovery"]</h5>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title">
-                    <span class="oi oi-monitor" title="@Localizer["Discovery"]" aria-hidden="true"></span>
-                </h1>
-                <a href="~/.well-known/openid-configuration" class="btn btn-block btn-primary">@Localizer["Discovery"]</a>
+    @if (_ddExistsAndIsTrue)
+    {           
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 box-shadow text-center">
+                <div class="card-header">
+                    <h5 class="my-0 font-weight-normal">@Localizer["Discovery"]</h5>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title">
+                        <span class="oi oi-monitor" title="@Localizer["Discovery"]" aria-hidden="true"></span>
+                    </h1>
+                    <a href="~/.well-known/openid-configuration" class="btn btn-block btn-primary">@Localizer["Discovery"]</a>
+                </div>
             </div>
         </div>
-    </div>
-
+    }
 </div>
