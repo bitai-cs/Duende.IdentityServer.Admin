@@ -43,7 +43,7 @@
     <div class="card-body">
         <p class="card-text">@Localizer["ScanQR"] <kbd>@Model.SharedKey</kbd> @Localizer["ScanQRSubTitle"]</p>
         <div class="row align-items-center">
-            <div class="col-12 col-md-6-xxx text-center text-md-start-xxx mb-3 mb-md-0">
+            <div class="col-12 text-center mb-3 mb-md-0">
                 <div id="qrCode" class="d-inline-block"></div>
                 <div id="qrCodeData" data-url="@Html.Raw(Model.AuthenticatorUri)"></div>
             </div>
