@@ -13,13 +13,13 @@ Modern admin UI for **Duende IdentityServer** and **ASP.NET Core Identity**.
 
 ## Versions
 
-- ✅ **Stable (production): v2.7.0**  
-  https://github.com/skoruba/Duende.IdentityServer.Admin/tree/release/2.7.0
+- 🎉 **Next generation Admin UI: v3.0.0-rc2**
+  - The upcoming stable v3 release is now available as a release candidate.
+  - Built with React, TypeScript, Tailwind CSS, Tailwind CSS, shadcn/ui, and a .NET 10 REST API backend.
+  - Includes new monitoring features, wizard flows, and many UX improvements.
 
-- 🎉 **Next generation (v3 – release candidate)** – : `3.0.0-rc2`
-  - React + TypeScript + Tailwind CSS + shadcn/ui
-  - .NET 10 backend REST API
-  - New monitoring and wizard flows
+- 📦 **Previous stable version: v2.7.0**
+  - Still available for existing v2 installations on the `release/2.7.0` branch.
 
 ---
 
