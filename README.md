@@ -13,13 +13,13 @@ Modern admin UI for **Duende IdentityServer** and **ASP.NET Core Identity**.
 
 ## Versions
 
-- ✅ **Stable (production): v2.7.0**  
-  https://github.com/skoruba/Duende.IdentityServer.Admin/tree/release/2.7.0
+- 🎉 **Next generation Admin UI: v3.0.0-rc2**
+  - The upcoming stable v3 release is now available as a release candidate.
+  - Built with React, TypeScript, Tailwind CSS, Tailwind CSS, shadcn/ui, and a .NET 10 REST API backend.
+  - Includes new monitoring features, wizard flows, and many UX improvements.
 
-- 🎉 **Next generation (v3 – preview)** – current prerelease: `3.0.0-preview.24`
-  - React + TypeScript + Tailwind CSS + shadcn/ui
-  - .NET 10 backend REST API
-  - New monitoring and wizard flows
+- 📦 **Previous stable version: v2.7.0**
+  - Still available for existing v2 installations on the `release/2.7.0` branch.
 
 ---
 
@@ -96,7 +96,7 @@ Define and track configuration rules for clients, API resources, and identity re
 ### 1. Install the template
 
 ```sh
-dotnet new install Skoruba.Duende.IdentityServer.Admin.Templates::3.0.0-preview.24
+dotnet new install Skoruba.Duende.IdentityServer.Admin.Templates::3.0.0-rc2
 ```
 
 ### 2. Create a new project
@@ -676,6 +676,42 @@ The solution contains **unit and integration tests** for all major components.
 - `Skoruba.Duende.IdentityServer.Admin.UnitTests` – Unit tests
 - `Skoruba.Duende.IdentityServer.Admin.Api.IntegrationTests` – API integration tests
 - `Skoruba.Duende.IdentityServer.STS.IntegrationTests` – STS integration tests
+- `Skoruba.Duende.IdentityServer.Admin.UI.Client.IntegrationTests` – Playwright UI integration tests (OIDC login flow + Admin UI assertions)
+
+### UI Integration Tests (Playwright)
+
+The UI E2E test project is located in:
+
+- `tests/Skoruba.Duende.IdentityServer.Admin.UI.Client.IntegrationTests`
+
+To run it:
+
+```sh
+cd tests/Skoruba.Duende.IdentityServer.Admin.UI.Client.IntegrationTests
+npm install
+npx playwright install chromium
+npm test
+```
+
+Default expected runtime services:
+
+- STS: `https://localhost:44310`
+- Admin API: `https://localhost:44302`
+- Admin UI host:
+  - Kestrel-hosted app: `https://localhost:7127`
+  - Vite dev server / default `E2E_ADMIN_URL` for Playwright: `https://localhost:50445`
+
+> **Important:** The seeded OIDC client redirect URIs and CORS origins in
+> `src/Skoruba.Duende.IdentityServer.Admin.Api/identityserverdata.json` use
+> `https://localhost:50445` by default. If you run the Admin UI on
+> `https://localhost:7127` instead, update the client configuration (or the
+> Playwright `E2E_ADMIN_URL`) so redirects and CORS validation continue to
+> work.
+
+The tests load credentials and expected client data from seed files:
+
+- `src/Skoruba.Duende.IdentityServer.Admin.Api/identitydata.json`
+- `src/Skoruba.Duende.IdentityServer.Admin.Api/identityserverdata.json`
 
 ---
 
