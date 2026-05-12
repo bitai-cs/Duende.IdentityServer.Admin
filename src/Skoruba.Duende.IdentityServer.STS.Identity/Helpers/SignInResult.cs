@@ -16,26 +16,17 @@
 
 
         #region Static members & methods
-        private static readonly CustomSignInResult _success = new CustomSignInResult { Succeeded = true };
-        private static readonly CustomSignInResult _failed = new CustomSignInResult();
-        private static readonly CustomSignInResult _lockedOut = new CustomSignInResult { IsLockedOut = true };
-        private static readonly CustomSignInResult _notAllowed = new CustomSignInResult { IsNotAllowed = true };
-        private static readonly CustomSignInResult _twoFactorRequired = new CustomSignInResult { RequiresTwoFactor = true };
-
-
-
-
         /// <summary>
         /// Returns a <see cref="SignInResult"/> that represents a successful sign-in.
         /// </summary>
         /// <returns>A <see cref="SignInResult"/> that represents a successful sign-in.</returns>
-        public new static CustomSignInResult Success => _success;
+        public new static CustomSignInResult Success => new CustomSignInResult { Succeeded = true };
 
         /// <summary>
         /// Returns a <see cref="SignInResult"/> that represents a failed sign-in.
         /// </summary>
         /// <returns>A <see cref="SignInResult"/> that represents a failed sign-in.</returns>
-        public new static CustomSignInResult Failed => _failed;
+        public new static CustomSignInResult Failed => new CustomSignInResult();
 
         /// <summary>
         /// Returns a <see cref="SignInResult"/> that represents a sign-in attempt that failed because
@@ -43,7 +34,7 @@
         /// </summary>
         /// <returns>A <see cref="SignInResult"/> that represents sign-in attempt that failed due to the
         /// user being locked out.</returns>
-        public new static CustomSignInResult LockedOut => _lockedOut;
+        public new static CustomSignInResult LockedOut => new CustomSignInResult { IsLockedOut = true };
 
         /// <summary>
         /// Returns a <see cref="SignInResult"/> that represents a sign-in attempt that failed because
@@ -51,7 +42,7 @@
         /// </summary>
         /// <returns>A <see cref="SignInResult"/> that represents sign-in attempt that failed due to the
         /// user is not allowed to sign-in.</returns>
-        public new static CustomSignInResult NotAllowed => _notAllowed;
+        public new static CustomSignInResult NotAllowed => new CustomSignInResult { IsNotAllowed = true };
 
         /// <summary>
         /// Returns a <see cref="SignInResult"/> that represents a sign-in attempt that needs two-factor
@@ -59,7 +50,7 @@
         /// </summary>
         /// <returns>A <see cref="SignInResult"/> that represents sign-in attempt that needs two-factor
         /// authentication.</returns>
-        public new static CustomSignInResult TwoFactorRequired => _twoFactorRequired;
+        public new static CustomSignInResult TwoFactorRequired => new CustomSignInResult { RequiresTwoFactor = true };
         #endregion
     }
 }
