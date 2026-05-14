@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skoruba.Duende.IdentityServer.STS.Identity.Configuration;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
 {
@@ -82,19 +83,19 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
         /// operation follows the regular flow in 
         /// <see cref="SignInManager{TUser}.CheckPasswordSignInAsync(TUser, string, bool)"/>.
         /// </remarks>
-        /// <param name="user">User identity. See <see cref="Admin.EntityFramework.Shared.Entities.Identity.UserIdentity"/>.</param>
+        /// <param name="user">User identity. See <see cref="IUserWithDomain"/>.</param>
         /// <param name="password">User password.</param>
         /// <param name="lockoutOnFailure">Whether or not to lockout the user account when password validation fails.</param>
         /// <returns><see cref="SignInResult"/></returns>
         public override async Task<SignInResult> CheckPasswordSignInAsync(TUser user, string password, bool lockoutOnFailure)
         {
-            // Try to cast the user identity to the custom UserIdentity class. If the cast fails, it means that the user identity does not have the UserDomain property, so we proceed with the regular password verification flow.
-            var userIdentity = user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity;
-            if (userIdentity == null)
+            // Try to cast the user identity to the custom IUserWithDomain interface. If the cast fails, it means that the user identity does not have the UserDomain property, so we proceed with the regular password verification flow.
+            var userWithDomain = user as IUserWithDomain;
+            if (userWithDomain == null)
                 return await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
 
             // Try to get the user domain profile based on the UserDomain property of the user identity. If there is no user domain profile for the user's domain, it means that the user's domain is not registered to access the LDAP Web Api, so we proceed with the regular password verification flow.
-            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(userIdentity.UserDomain);
+            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(userWithDomain.UserDomain);
 
             // The user does not have an assigned domain or the user's domain is not registered to access the LDAP Web Api.
             if (userDomainProfile == null)
@@ -107,8 +108,8 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
 
             var ldapAccountCredentials = new Bitai.LDAPHelper.DTO.LDAPDomainAccountCredential
             {
-                DomainName = userIdentity.UserDomain,
-                AccountName = userIdentity.UserName.Split('\\').Last(),
+                DomainName = userWithDomain.UserDomain,
+                AccountName = userWithDomain.UserName.Split('\\').Last(),
                 DomainAccountPassword = password
             };
 
@@ -206,13 +207,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
             if (!await UserManager.IsLockedOutAsync(user))
                 return failedResult;
 
-            var lockedOutResult = CustomSignInResult.LockedOut;
-            lockedOutResult.HttpStatusCode = failedResult.HttpStatusCode;
-            lockedOutResult.HttpReasonPhrase = failedResult.HttpReasonPhrase;
-            lockedOutResult.HttpContentType = failedResult.HttpContentType;
-            lockedOutResult.HttpResponseContent = failedResult.HttpResponseContent;
-
-            return lockedOutResult;
+            return CustomSignInResult.LockedOut.WithMetadataFrom(failedResult);
         }
     }
 }

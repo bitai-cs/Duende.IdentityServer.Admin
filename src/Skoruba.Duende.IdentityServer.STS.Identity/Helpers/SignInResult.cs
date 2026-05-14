@@ -12,6 +12,16 @@
 
         public CustomSignInResult(): base() { }
 
+        public CustomSignInResult WithMetadataFrom(CustomSignInResult other)
+        {
+            HttpStatusCode = other.HttpStatusCode;
+            HttpReasonPhrase = other.HttpReasonPhrase;
+            HttpContentType = other.HttpContentType;
+            HttpResponseContent = other.HttpResponseContent;
+
+            return this;
+        }
+
 
 
 

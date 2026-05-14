@@ -16,6 +16,7 @@ using Skoruba.Duende.IdentityServer.STS.Identity.Configuration.Interfaces;
 using Skoruba.Duende.IdentityServer.STS.Identity.Helpers;
 using Skoruba.Duende.IdentityServer.STS.Identity.Helpers.Localization;
 using Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Manage;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
 {    
@@ -640,11 +641,11 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
             var claims = await _userManager.GetClaimsAsync(user);
             var profile = OpenIdClaimHelpers.ExtractProfileInfo(claims);
 
-            var userIdentity = user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity;
+            var userWithDomain = user as IUserWithDomain;
 
             var model = new IndexViewModel
             {
-                UserDomain = userIdentity.UserDomain,
+                UserDomain = userWithDomain?.UserDomain,
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
