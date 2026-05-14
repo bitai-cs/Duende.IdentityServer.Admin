@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skoruba.Duende.IdentityServer.STS.Identity.Configuration;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.Entities.Identity;
 
 namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
 {
@@ -82,24 +83,33 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
         /// operation follows the regular flow in 
         /// <see cref="SignInManager{TUser}.CheckPasswordSignInAsync(TUser, string, bool)"/>.
         /// </remarks>
-        /// <param name="user">User identity. See <see cref="Admin.EntityFramework.Shared.Entities.Identity.UserIdentity"/>.</param>
+        /// <param name="user">User identity. See <see cref="IUserWithDomain"/>.</param>
         /// <param name="password">User password.</param>
         /// <param name="lockoutOnFailure">Whether or not to lockout the user account when password validation fails.</param>
         /// <returns><see cref="SignInResult"/></returns>
         public override async Task<SignInResult> CheckPasswordSignInAsync(TUser user, string password, bool lockoutOnFailure)
         {
-            var userIdentity = user as Admin.EntityFramework.Shared.Entities.Identity.UserIdentity;
+            // Try to cast the user identity to the custom IUserWithDomain interface. If the cast fails, it means that the user identity does not have the UserDomain property, so we proceed with the regular password verification flow.
+            var userWithDomain = user as IUserWithDomain;
+            if (userWithDomain == null)
+                return await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
 
-            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(userIdentity.UserDomain);
+            // Try to get the user domain profile based on the UserDomain property of the user identity. If there is no user domain profile for the user's domain, it means that the user's domain is not registered to access the LDAP Web Api, so we proceed with the regular password verification flow.
+            var userDomainProfile = _ldapWebApiProvider.GetUserDomainProfile(userWithDomain.UserDomain);
 
             // The user does not have an assigned domain or the user's domain is not registered to access the LDAP Web Api.
             if (userDomainProfile == null)
+                // In this case, the password verification operation follows the regular flow in SignInManager<TUser>.CheckPasswordSignInAsync(TUser, string, bool).
                 return await base.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
+            
+            var error = await PreSignInCheck(user);
+            if (error != null)
+                return error;
 
             var ldapAccountCredentials = new Bitai.LDAPHelper.DTO.LDAPDomainAccountCredential
             {
-                DomainName = userIdentity.UserDomain,
-                AccountName = userIdentity.UserName.Split('\\').Last(),
+                DomainName = userWithDomain.UserDomain,
+                AccountName = userWithDomain.UserName.Split('\\').Last(),
                 DomainAccountPassword = password
             };
 
@@ -131,19 +141,18 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
                 }
 
                 Logger.LogError("Login failed: DomainName:{0}, AccountName:{1}", ldapAccountCredentials.DomainName, ldapAccountCredentials.AccountName);
-                Logger.LogError($"Unsuccessful response when try to authenticate user credentials by LDAP Web Api. Response code: {(int)httpResponse.HttpStatusCode} ({httpResponse.ReasonPhrase}). Content Type: {httpResponse.ContentMediaType}");
+                Logger.LogError($"Failed to authenticate user credentials using the LDAP Web Api. Response Code: {(int)httpResponse.HttpStatusCode} ({httpResponse.ReasonPhrase}). Content Type: {httpResponse.ContentMediaType}");
                 Logger.LogError(responseContent);
                 #endregion
                 
-                CustomSignInResult _customResult;
-                
-                if (httpResponse.HttpStatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    _customResult = CustomSignInResult.NotAllowed;
-                else
-                    _customResult = CustomSignInResult.Failed;
+                var _customResult = httpResponse.HttpStatusCode == System.Net.HttpStatusCode.Unauthorized
+                    ? CustomSignInResult.NotAllowed
+                    : CustomSignInResult.Failed;
 
                 _customResult.HttpStatusCode = (int)httpResponse.HttpStatusCode;
-                _customResult.HttpReasonPhrase = httpResponse.ReasonPhrase + middlewareException != null ? $"{middlewareException.Source}: {middlewareException.Message}" : string.Empty;
+                _customResult.HttpReasonPhrase = middlewareException != null
+                    ? $"{middlewareException.Source}: {middlewareException.Message}"
+                    : httpResponse.ReasonPhrase;
                 _customResult.HttpContentType = httpResponse.ContentMediaType.ToString();
                 _customResult.HttpResponseContent = responseContent;
 
@@ -153,18 +162,52 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
             {
                 var accountAuthenticationStatus = ldapAuthenticationsWebApiClient.GetDTOFromResponse<Bitai.LDAPHelper.DTO.LDAPDomainAccountAuthenticationResult>(httpResponse);
 
-                CustomSignInResult _customResult;
-
                 if (accountAuthenticationStatus.IsAuthenticated)
-                    _customResult = CustomSignInResult.Success;
-                else
-                    _customResult = CustomSignInResult.NotAllowed;
+                {
+                    var successResult = CustomSignInResult.Success;
+                    successResult.HttpStatusCode = (int)httpResponse.HttpStatusCode;
+                    successResult.HttpReasonPhrase = accountAuthenticationStatus.OperationMessage;
 
-                _customResult.HttpStatusCode = (int)httpResponse.HttpStatusCode;
-                _customResult.HttpReasonPhrase = accountAuthenticationStatus.OperationMessage;
+                    return await ResetAccessFailedCountOnSuccessAsync(user, successResult);
+                }
 
-                return _customResult;
+                var failedResult = CustomSignInResult.NotAllowed;
+                failedResult.HttpStatusCode = (int)httpResponse.HttpStatusCode;
+                failedResult.HttpReasonPhrase = accountAuthenticationStatus.OperationMessage;
+
+                return await AccessFailedOnLdapRejectionAsync(user, lockoutOnFailure, failedResult);
             }
+        }
+
+        private async Task<SignInResult> ResetAccessFailedCountOnSuccessAsync(TUser user, CustomSignInResult successResult)
+        {
+            if (!UserManager.SupportsUserLockout)
+                return successResult;
+
+            var resetResult = await UserManager.ResetAccessFailedCountAsync(user);
+            if (resetResult.Succeeded)
+                return successResult;
+
+            Logger.LogWarning("LDAP login succeeded, but resetting the access failed count failed for user.");
+            return CustomSignInResult.Failed;
+        }
+
+        private async Task<SignInResult> AccessFailedOnLdapRejectionAsync(TUser user, bool lockoutOnFailure, CustomSignInResult failedResult)
+        {
+            if (!UserManager.SupportsUserLockout || !lockoutOnFailure)
+                return failedResult;
+
+            var incrementResult = await UserManager.AccessFailedAsync(user);
+            if (!incrementResult.Succeeded)
+            {
+                Logger.LogWarning("LDAP login failed, but incrementing the access failed count failed for user.");
+                return CustomSignInResult.Failed;
+            }
+
+            if (!await UserManager.IsLockedOutAsync(user))
+                return failedResult;
+
+            return CustomSignInResult.LockedOut.WithMetadataFrom(failedResult);
         }
     }
 }
