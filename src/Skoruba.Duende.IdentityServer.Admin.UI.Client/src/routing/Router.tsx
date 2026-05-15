@@ -53,6 +53,7 @@ const ConfigurationRules = lazy(
 const AuditLogs = lazy(() => import("@/pages/AuditLogs/AuditLogs"));
 const RoleUsers = lazy(() => import("@/pages/RoleUsers/RoleUsers"));
 const AccessDenied = lazy(() => import("@/pages/AccessDenied/AccessDenied"));
+const Unauthorized = lazy(() => import("@/pages/Unauthorized/Unauthorized"));
 import { getBaseHref } from "@/lib/utils";
 import {
   HomeUrl,
@@ -84,6 +85,7 @@ import {
   RoleUsersUrl,
   NotFoundUrl,
   AccessDeniedUrl,
+  UnauthorizedUrl,
 } from "./Urls";
 import ProtectedRoute from "./ProtectedRoute";
 import { useAuth } from "@/contexts/AuthContext";
@@ -335,6 +337,14 @@ export const router = createBrowserRouter(
       element: (
         <MinimalLayout>
           <AccessDenied />
+        </MinimalLayout>
+      ),
+    },
+    {
+      path: UnauthorizedUrl,
+      element: (
+        <MinimalLayout>
+          <Unauthorized />
         </MinimalLayout>
       ),
     },

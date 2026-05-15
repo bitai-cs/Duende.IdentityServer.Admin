@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { ConfigurationIssuesUrl, ConfigurationRulesUrl } from "@/routing/Urls";
 import Loading from "@/components/Loading/Loading";
 import { useConfigurationIssuesSummary } from "@/services/DashboardService";
+import HomeQueryErrorState from "./HomeQueryErrorState";
 
 const LEGEND_STYLES = {
   errors: {
@@ -86,7 +87,7 @@ export function ConfigurationIssuesSummary() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { data, isLoading } = useConfigurationIssuesSummary();
+  const { data, error, isError, isLoading } = useConfigurationIssuesSummary();
 
   const errors = data?.errors ?? 0;
   const warnings = data?.warnings ?? 0;
@@ -150,6 +151,16 @@ export function ConfigurationIssuesSummary() {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <HomeQueryErrorState
+        error={error}
+        cardTitle={t("Home.ClientsChecker.Title")}
+        cardDescription={t("Home.ClientsChecker.Description")}
+      />
+    );
   }
 
   const totalIssues = errors + warnings + recommendations;

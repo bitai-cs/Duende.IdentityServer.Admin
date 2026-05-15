@@ -13,6 +13,7 @@ import ConfigurationIssuesSummary from "./ConfigurationIssuesSummary";
 import { OverviewLeft } from "./OverviewLeft";
 import Loading from "@/components/Loading/Loading";
 import { queryKeys, queryWithoutCache } from "@/services/QueryKeys";
+import HomeQueryErrorState from "./HomeQueryErrorState";
 
 const DashboardCharts = () => {
   const { t } = useTranslation();
@@ -31,6 +32,12 @@ const DashboardCharts = () => {
       >
         {dashboardIdentityServer.isLoading ? (
           <Loading />
+        ) : dashboardIdentityServer.isError ? (
+          <HomeQueryErrorState
+            error={dashboardIdentityServer.error}
+            cardTitle={t("Home.Overview")}
+            cardDescription={t("Home.OverviewDescription")}
+          />
         ) : (
           <OverviewLeft
             data={dashboardIdentityServer.data?.identityServerDataChart ?? []}
@@ -43,9 +50,18 @@ const DashboardCharts = () => {
             <CardDescription>{t("Home.AuditLogsDescription")}</CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <AuditLogs
-              data={dashboardIdentityServer.data?.auditLogsData ?? []}
-            />
+            {dashboardIdentityServer.isLoading ? (
+              <Loading />
+            ) : dashboardIdentityServer.isError ? (
+              <HomeQueryErrorState
+                error={dashboardIdentityServer.error}
+                compact
+              />
+            ) : (
+              <AuditLogs
+                data={dashboardIdentityServer.data?.auditLogsData ?? []}
+              />
+            )}
           </CardContent>
         </Card>
       </div>

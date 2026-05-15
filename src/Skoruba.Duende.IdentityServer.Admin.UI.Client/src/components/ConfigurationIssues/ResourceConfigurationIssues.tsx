@@ -4,6 +4,7 @@ import { client } from "@skoruba/duende.identityserver.admin.api.client";
 import { IssueTypeBadge } from "@/pages/ConfigurationIssues/IssueTypeBadge";
 import { useConfigurationIssuesForResource } from "@/services/DashboardService";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/Loading/Loading";
 
 const severityRank: Record<client.ConfigurationIssueTypeView, number> = {
   [client.ConfigurationIssueTypeView.Error]: 0,
@@ -22,10 +23,11 @@ const ResourceConfigurationIssues: React.FC<
   const { t } = useTranslation();
   const [collapsed, setCollapsed] = useState(true);
   const normalizedResourceId = Number(resourceId);
-  const { data: issues = [], isLoading } = useConfigurationIssuesForResource(
-    normalizedResourceId,
-    resourceType
-  );
+  const {
+    data: issues = [],
+    isError,
+    isLoading,
+  } = useConfigurationIssuesForResource(normalizedResourceId, resourceType);
 
   const sortedIssues = useMemo(
     () =>
@@ -39,10 +41,20 @@ const ResourceConfigurationIssues: React.FC<
     [issues]
   );
 
-  if (
-    !Number.isFinite(normalizedResourceId) ||
-    (!issues.length && !isLoading)
-  ) {
+  if (!Number.isFinite(normalizedResourceId) || isError) {
+    return null;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="mb-6 flex min-h-10 items-center gap-2 px-1 text-xs text-muted-foreground/80">
+        <Loading size="sm" />
+        <span>{t("ConfigurationIssues.CheckingIssues")}</span>
+      </div>
+    );
+  }
+
+  if (!issues.length) {
     return null;
   }
 

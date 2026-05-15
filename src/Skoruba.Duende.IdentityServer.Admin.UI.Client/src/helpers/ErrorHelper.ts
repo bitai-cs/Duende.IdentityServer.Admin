@@ -9,7 +9,7 @@ import {
 import { isProblemDetails, isSwaggerError } from "@/lib/type-guards";
 import i18next from "@/i18n/config";
 import { router } from "@/routing/Router";
-import { AccessDeniedUrl } from "@/routing/Urls";
+import { AccessDeniedUrl, UnauthorizedUrl } from "@/routing/Urls";
 
 const ERROR_MESSAGES = {
   UNEXPECTED: () => String(i18next.t("Errors.Unexpected")),
@@ -59,7 +59,7 @@ const flattenErrors = (errors: ProblemDetails["errors"]): string => {
   return values.join(", ");
 };
 
-const getStatusCode = (error: unknown): number | undefined => {
+export const getStatusCode = (error: unknown): number | undefined => {
   if (error instanceof client.SwaggerException) return error.status;
   if (typeof error === "object" && error !== null && "status" in error) {
     const status = (error as HasStatus).status;
@@ -146,7 +146,10 @@ function handleGlobalError(
 ) {
   const description = getErrorMessage(error);
   const status = getStatusCode(error);
-  if (status === 401) return;
+  if (status === 401) {
+    router.navigate(UnauthorizedUrl);
+    return;
+  }
   if (status === 403) {
     router.navigate(AccessDeniedUrl);
     return;
