@@ -4,6 +4,7 @@ export const ClientsUrl = "/clients";
 export const HomeUrl = "/";
 export const NotFoundUrl = "*";
 export const AccessDeniedUrl = "/access-denied";
+export const UnauthorizedUrl = "/unauthorized";
 
 export const ApiResourceEditUrl = "/api-resource/:resourceId";
 export const ApiResourceCreateUrl = "/api-resource";

@@ -4,7 +4,7 @@ export type UseModalReturn = {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  toggleModal: () => void;
+  toggleModal: (isOpen?: boolean) => void;
   setValue: (isOpen: boolean) => void;
 };
 
@@ -19,7 +19,12 @@ const useModal = (initiallyOpened: boolean = false): UseModalReturn => {
     setIsOpen(false);
   }, []);
 
-  const toggleModal = useCallback(() => {
+  const toggleModal = useCallback((isOpen?: boolean) => {
+    if (typeof isOpen === "boolean") {
+      setIsOpen(isOpen);
+      return;
+    }
+
     setIsOpen((prevState) => !prevState);
   }, []);
 

@@ -57,6 +57,12 @@
       "Recommendation_one": "{{count}} recommendation",
       "Recommendation_other": "{{count}} recommendations",
       "Button": "View issues"
+    },
+    "DashboardState": {
+      "Title": "Dashboard unavailable",
+      "Unauthorized": "Your admin API session is no longer valid. Sign in again to continue.",
+      "Forbidden": "You are signed in, but you do not have permission to view dashboard data.",
+      "Generic": "Dashboard data could not be loaded."
     }
   },
   "Dashboard": {
@@ -117,6 +123,9 @@
       "TryAgain": "Try Again",
       "ReloadPage": "Reload Page"
     },
+    "ValidationSummary": {
+      "Title": "Please fix the following errors"
+    },
     "Tip": {
       "Label": "Tip:"
     },
@@ -148,6 +157,7 @@
     "ExpirationTimeRequired": "Expiration time is required.",
     "SecretHashTypeRequiredForSharedSecret": "A hash type must be selected for SharedSecret.",
     "UrlRequired": "Please enter a valid URL",
+    "InvalidNumber": "Please enter a valid number",
     "InvalidEmail": "Invalid email",
     "Required": "This field is required",
     "FieldRequired": "{{field}} is required.",
@@ -869,6 +879,7 @@
     },
     "ResourceIssuesTitle": "Configuration issues for this resource",
     "ResourceIssuesSummary": "{{count}} issue(s) detected",
+    "CheckingIssues": "Checking issues...",
     "UnknownIssueMessage": "No details provided for this issue.",
     "ShowIssues": "Show issues",
     "HideIssues": "Hide issues"
@@ -955,6 +966,11 @@
       "Title": "Access Denied",
       "Description": "You don't have permission to view this resource. Contact your administrator if you believe this is a mistake.",
       "GoHome": "Go to Home"
+    },
+    "Unauthorized": {
+      "Title": "Sign-in required",
+      "Description": "Your admin API session is no longer valid. Sign in again to continue.",
+      "SignInAgain": "Sign in again"
     }
   },
   "Footer": {

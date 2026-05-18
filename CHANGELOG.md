@@ -1,5 +1,44 @@
 # Changelog
 
+## [3.0.0-rc4]
+
+### Fixed
+
+- Fixed Admin UI data-grid delete actions leaving the page blocked after confirming deletion from the row action menu
+- Corrected shared modal/dropdown state handling to properly release pointer interaction after dialog close
+- Added Playwright regression coverage for the delete-from-grid interaction flow
+
+---
+
+## [3.0.0-rc3]
+
+### Changed
+
+- Improved Admin UI authentication and authorization UX by separating `401 Unauthorized` and `403 Forbidden` flows
+- Updated the default seeded Admin UI client (`skoruba_identity_admin_v3`) to use `RequireConsent = false`
+- Added focused Playwright regression coverage for the new auth and form-validation behaviors
+
+### Fixed
+
+- Fixed Admin UI behavior when API sessions expire or become invalid, preventing confusing partially authenticated states
+- Fixed dashboard and configuration-issue loading/error states to avoid misleading empty content and layout glitches
+- Fixed tabbed client form validation visibility by adding a summary for hidden-tab errors and friendlier numeric validation messages
+- Resolved npm audit issues in `Skoruba.Duende.IdentityServer.STS.Identity`
+
+---
+
+## [3.0.0-rc2]
+
+This release candidate focuses on stabilization before the final `3.0.0` release.
+
+The main highlight of this release is a significant improvement in test coverage. We added new Playwright UI integration tests, extended API integration tests, and added more STS integration tests to better verify the full Admin UI, API, and IdentityServer integration scenarios.
+
+This release also includes stricter validation and clearer error handling for user and role claim updates, improved API feedback, updated documentation, and version updates across the solution.
+
+If no critical issues are reported, this release candidate is intended to be promoted to the final `3.0.0` release after a short stabilization period.
+
+---
+
 ## [3.0.0-preview.24]
 
 ### Changed

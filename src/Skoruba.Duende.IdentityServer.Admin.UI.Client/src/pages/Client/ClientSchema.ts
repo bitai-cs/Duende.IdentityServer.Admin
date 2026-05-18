@@ -14,8 +14,16 @@ const DualListTypeSchema = z.object({
   label: z.string(),
 });
 
+const optionalNumberField = z
+  .number({
+    invalid_type_error: t("Validation.InvalidNumber"),
+  })
+  .optional();
+
 const nullableOptionalNumberField = z
-  .number()
+  .number({
+    invalid_type_error: t("Validation.InvalidNumber"),
+  })
   .nullable()
   .optional()
   .transform((value) => value ?? undefined);
@@ -55,17 +63,17 @@ export const formSchema = z.object({
   identityProviderRestrictions: z.array(z.string()).optional(),
   useSsoLifetime: nullableOptionalNumberField,
   coordinateLifetimeWithUserSession: z.boolean().optional(),
-  identityTokenLifetime: z.number().optional(),
+  identityTokenLifetime: optionalNumberField,
   allowedIdentityTokenSigningAlgorithms: z.array(z.string()).optional(),
-  accessTokenLifetime: z.number().optional(),
+  accessTokenLifetime: optionalNumberField,
   allowAccessTokenViaBrowser: z.boolean().optional(),
   accessTokenType: optionalSelectNumberField,
-  authorizationCodeLifetime: z.number().optional(),
+  authorizationCodeLifetime: optionalNumberField,
   requireRequestObject: z.boolean().optional(),
   requirePkce: z.boolean().optional(),
   allowPlainTextPkce: z.boolean().optional(),
-  absoluteRefreshTokenLifetime: z.number().optional(),
-  slidingRefreshTokenLifetime: z.number().optional(),
+  absoluteRefreshTokenLifetime: optionalNumberField,
+  slidingRefreshTokenLifetime: optionalNumberField,
   cibaLifetime: nullableOptionalNumberField,
   pollingInterval: nullableOptionalNumberField,
   refreshTokenUsage: optionalSelectNumberField,
@@ -87,7 +95,7 @@ export const formSchema = z.object({
   clientUri: z.string().optional(),
   logoUri: z.string().optional(),
   userCodeType: z.string().optional(),
-  deviceCodeLifetime: z.number().optional(),
+  deviceCodeLifetime: optionalNumberField,
   consentLifetime: nullableOptionalNumberField,
   protocolType: z.string().optional(),
   userSsoLifetime: nullableOptionalNumberField,
