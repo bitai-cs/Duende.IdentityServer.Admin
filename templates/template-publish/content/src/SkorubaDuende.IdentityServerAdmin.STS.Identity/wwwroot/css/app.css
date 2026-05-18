@@ -1668,8 +1668,8 @@ body {
   max-width: 42rem;
 }
 
-.max-w-4xl {
-  max-width: 56rem;
+.max-w-5xl {
+  max-width: 64rem;
 }
 
 .max-w-md {
@@ -2018,6 +2018,11 @@ body {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -2168,6 +2173,10 @@ body {
 
 .underline-offset-4 {
   text-underline-offset: 4px;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .opacity-90 {
