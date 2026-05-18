@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.0-rc4]
+
+### Fixed
+
+- Fixed Admin UI data-grid delete actions leaving the page blocked after confirming deletion from the row action menu
+- Corrected shared modal/dropdown state handling to properly release pointer interaction after dialog close
+- Added Playwright regression coverage for the delete-from-grid interaction flow
+
+---
+
 ## [3.0.0-rc3]
 
 ### Changed
