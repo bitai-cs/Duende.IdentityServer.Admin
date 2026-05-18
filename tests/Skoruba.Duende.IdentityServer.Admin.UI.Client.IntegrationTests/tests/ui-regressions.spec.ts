@@ -26,6 +26,49 @@ const createEmptyConfigurationIssuesResponse = () => ({
 });
 
 test.describe("Admin UI regressions", () => {
+  test("delete action from clients grid does not leave the page blocked", async ({
+    page,
+  }) => {
+    await ensureLoggedInAndOpenClients(page, credentials);
+
+    const targetRow = await findClientRow(page, seedData.expectedClientId);
+    const deleteClientHandler = async (route: Route) => {
+      if (route.request().method() !== "DELETE") {
+        await route.fallback();
+        return;
+      }
+
+      await route.fulfill({
+        status: 204,
+        body: "",
+      });
+    };
+
+    await page.route("**/api/Clients/*", deleteClientHandler);
+
+    await targetRow
+      .getByRole("button", { name: "Open menu", exact: true })
+      .click();
+    await page.getByRole("menuitem", { name: "Delete", exact: true }).click();
+
+    const deleteDialog = page.getByRole("alertdialog");
+    await expect(deleteDialog).toBeVisible();
+    await deleteDialog
+      .getByRole("button", { name: "Delete", exact: true })
+      .click();
+
+    await expect(deleteDialog).toBeHidden();
+
+    await page
+      .getByRole("button", { name: "Add New Client", exact: true })
+      .click();
+    await expect(
+      page.getByRole("heading", { name: "New Client", exact: true }),
+    ).toBeVisible();
+
+    await page.unroute("**/api/Clients/*", deleteClientHandler);
+  });
+
   test("401 dashboard response opens unauthorized screen and sign in again returns to home", async ({
     page,
   }) => {
