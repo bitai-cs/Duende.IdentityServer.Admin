@@ -114,7 +114,7 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
             };
 
             var ldapAuthenticationsWebApiClient = userDomainProfile.GetLdapAuthenticationsWebApiClient();
-            var httpResponse = await ldapAuthenticationsWebApiClient.AuthenticateAsync(ldapAccountCredentials);
+            var httpResponse = await ldapAuthenticationsWebApiClient.AuthenticateAsync(ldapAccountCredentials, $"{nameof(ApplicationSignInManager<TUser>)}.{nameof(CheckPasswordSignInAsync)}", userDomainProfile.LdapWebApiProfile.ClientCredentialRequired);
             if (!httpResponse.IsSuccessResponse)
             {
                 #region Write event log
