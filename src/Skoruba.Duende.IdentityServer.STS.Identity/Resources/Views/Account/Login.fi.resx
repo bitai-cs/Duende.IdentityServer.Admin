@@ -156,10 +156,4 @@
   <data name="Username" xml:space="preserve">
     <value>Käyttäjätunnus</value>
   </data>
-  <data name="ValidationUsername" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ValidationPassword" xml:space="preserve">
-    <value />
-  </data>
 </root>

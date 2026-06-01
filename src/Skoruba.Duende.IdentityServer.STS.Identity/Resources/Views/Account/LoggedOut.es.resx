@@ -118,10 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Click" xml:space="preserve">
-    <value>Click</value>
-  </data>
-  <data name="GoToAccount" xml:space="preserve">
-    <value>Ir a los datos de su cuenta.</value>
+    <value>Clic</value>
   </data>
   <data name="Here" xml:space="preserve">
     <value>aquí</value>
@@ -130,7 +127,7 @@
     <value>para volver a la</value>
   </data>
   <data name="SubTitle" xml:space="preserve">
-    <value>Se ha completado el cierre de tu sesión de forma satisfactoria.</value>
+    <value>Tu sesión ha sido cerrada</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Sesión cerrada</value>

@@ -10,20 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Remove="wwwroot\dist\js\account_forgotpassword.js" />
-      <Content Remove="wwwroot\dist\js\account_forgotpassword.min.js" />
-      <Content Remove="wwwroot\dist\js\account_register.js" />
-      <Content Remove="wwwroot\dist\js\account_register.min.js" />
-    </ItemGroup>
-
-    <ItemGroup>
 		<PackageReference Include="AspNet.Security.OAuth.GitHub" Version="8.2.0" />
 		<PackageReference Include="AspNetCore.HealthChecks.MySql" Version="8.0.1" />
 		<PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="8.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
-		<PackageReference Include="Bitai.LDAPWebApi.Clients" Version="8.6.0" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
@@ -91,17 +83,6 @@
         <EmbeddedResource Update="Resources\Views\Account\RegisterConfirmation.en.resx">
             <Generator>ResXFileCodeGenerator</Generator>
         </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Log\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="wwwroot\dist\js\account_forgotpassword.min.js" />
-      <None Include="wwwroot\dist\js\account_forgotpassword.js" />
-      <None Include="wwwroot\dist\js\account_register.min.js" />
-      <None Include="wwwroot\dist\js\account_register.js" />
     </ItemGroup>
 
 </Project>

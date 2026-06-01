@@ -13,7 +13,7 @@ namespace Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers
 
         public static ICollection<string> GetThemes()
         {
-            var themes = new List<string> { DefaultTheme, "darkly", "cosmo", "cerulean", "cyborg", "flatly", "journal", "litera", "lumen", "lux", "materia", "minty", "morph", "pulse", "quartz", "sandstone", "simplex", "sketchy", "slate", "solar", "spacelab", "superhero", "united", "vapor", "yeti", "zephyr" };
+            var themes = new List<string> { DefaultTheme, "darkly", "cosmo", "cerulean", "cyborg", "flatly", "journal", "litera", "lumen", "lux", "materia", "minty", "pulse", "sandstone", "simplex", "sketchy", "slate", "solar", "spacelab", "superhero", "united", "yeti" };
 
             return themes;
         }

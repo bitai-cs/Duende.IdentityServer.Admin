@@ -124,19 +124,19 @@
     <value>E-mail</value>
   </data>
   <data name="ExternalLogin" xml:space="preserve">
-    <value>O ingresa usando</value>
+    <value>Inicio de sesión externo</value>
   </data>
   <data name="Forgot" xml:space="preserve">
-    <value>¿Olvidaste tu contraseña?</value>
+    <value>Olvidé mi contraseña</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
     <value>Petición de inicio de sesión inválido</value>
   </data>
   <data name="LocalLogin" xml:space="preserve">
-    <value>Inicio de sesión</value>
+    <value>Inicio de sesión local</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Inicia sesión</value>
+    <value>Inicio de sesión</value>
   </data>
   <data name="NoSchema" xml:space="preserve">
     <value>No hay esquemas de inicio de sesión configurados para este cliente.</value>
@@ -145,7 +145,7 @@
     <value>Contraseña</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>¿Eres nuevo aquí? Registrate</value>
+    <value>Registrarse</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Recordar inicio de sesión</value>
@@ -155,26 +155,5 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Nombre de usuario</value>
-  </data>
-  <data name="ServiceTermsTitle" xml:space="preserve">
-    <value>Términos del Servicio</value>
-  </data>
-  <data name="PrivacyPolicyTitle" xml:space="preserve">
-    <value>Política de Privacidad</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Cerrar</value>
-  </data>
-  <data name="ExternalLoginSubTitle" xml:space="preserve">
-    <value>tus cuentas de redes sociales</value>
-  </data>
-  <data name="Acceptance" xml:space="preserve">
-    <value>Al continuar, aceptas nuestros</value>
-  </data>
-  <data name="ValidationUsername" xml:space="preserve">
-    <value>Debe de ingresar su usuario</value>
-  </data>
-  <data name="ValidationPassword" xml:space="preserve">
-    <value>Debe de ingresar su contraseña.</value>
   </data>
 </root>

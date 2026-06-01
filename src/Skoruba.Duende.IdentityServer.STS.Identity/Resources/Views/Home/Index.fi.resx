@@ -126,9 +126,6 @@
   <data name="Discovery" xml:space="preserve">
     <value>Konfiguraation dokumentti</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value />
-  </data>
   <data name="Grants" xml:space="preserve">
     <value>Pysyvät oikeudet</value>
   </data>

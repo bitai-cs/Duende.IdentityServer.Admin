@@ -121,7 +121,7 @@
     <value>Register</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>Confirm Password</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -133,37 +133,9 @@
     <value>Create a new account.</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Sign Up</value>
+    <value>Register</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>Username</value>
-  </data>
-  <data name="ValidationUser" xml:space="preserve">
-    <value>You must enter the username you wish to register.</value>
-  </data>
-  <data name="ValidationEmail" xml:space="preserve">
-    <value>You must enter a valid email address related to your user.</value>
-  </data>
-  <data name="ValidationPassword" xml:space="preserve">
-    <value>You must enter a valid password.</value>
-  </data>
-  <data name="PasswordTip" xml:space="preserve">
-    <value>The password must be at least 8 characters long, including uppercase, lowercase, numbers, and special characters.</value>
-  </data>
-  <data name="ValidationPasswordConfirmation" xml:space="preserve">
-    <value>You must enter the password confirmation.</value>
-  </data>
-  <data name="GoBack" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="PhoneNumber" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="Profile" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="Website" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
   </data>
 </root>

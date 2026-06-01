@@ -28,20 +28,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="@UrlHelper.Content(@RootConfiguration.AdminConfiguration.FaviconUri)" />
 
     <environment include="Development">
-        @* <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" /> *@
-        <link href="~/dist/css/bootstrap.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/open-iconic-bootstrap.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/fontawesome-all.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/cookieconsent.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
         @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        @* <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" /> *@
-        <link href="~/dist/css/bootstrap.min.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/open-iconic-bootstrap.min.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/fontawesome-all.min.css" asp-append-version="true" rel="stylesheet" />
-        <link href="~/dist/css/cookieconsent.min.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
         @await Html.PartialAsync("Common/ThemeResources")
         <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
     </environment>
@@ -54,61 +46,56 @@
     @await RenderSectionAsync("styles", required: false)
 </head>
 <body>
-    <header class="mb-3 mb-md-4 mb-lg-4 border-bottom box-shadow">
-        <div class="container">
-            <div class="menu container-fluid d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <!-- Logo -->
-                    <img class="logo-image" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)">
-                    <!--Site name -->
-                    <h1 class="logo-title ml-3 my-0 mr-md-auto font-weight-normal">
-                        <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a>
-                    </h1>
+
+    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow">
+        <!--Site name -->
+        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
+        <!--Menu item -->
+        @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
+        {
+            <!--Menu item -->
+            <vc:identity-server-admin-link></vc:identity-server-admin-link>
+
+            <!--Menu item -->
+            <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    @Localizer["Settings"] - @name
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
+                    @if (hasExternalLogins)
+                    {
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
+                    }
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
+                    <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
                 </div>
-                @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
-                {           
-                    <!--Menu item -->
-                    <!--<vc:identity-server-admin-link></vc:identity-server-admin-link>-->
-                    
-                    <div class="d-flex gap-2">
-                        <!--Menu item -->
-                        <div class="menu-item my-md-0 mr-md-3 dropdown">
-                            <button type="button" class="btn btn-primary btn-user-responsive  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                @* @Localizer["Settings"] - *@
-                                @name
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
-                                @if (hasExternalLogins)
-                                {
-                                    <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
-                                }                                
-                                <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
-                                <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
-                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">@Localizer["Signout"]</a>
-                            </div>
-                        </div>                        
-                    </div>
-                }                
             </div>
-        </div>
-    </header>
+
+            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
+        }
+
+        <!--Menu button - show in < MD -->
+        <a class="my-2 btn btn-outline-primary menu-button" href="#">
+            <span class="oi oi-menu" title="menu" aria-hidden="true"></span> @Localizer["Menu"]
+        </a>
+    </div>
 
     <div class="container">
         @RenderBody()
 
-        <footer class="mt-md-3 pt-3 pb-3 pt-md-4 pb-md-4 border-top">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
-                <div class="col-6 col-lg-8 mt-2">
+                <div class="col-6 col-md">
                     @RootConfiguration.AdminConfiguration.PageTitle
                     <small class="d-block mb-3 text-muted">@Localizer["FooterCopyright"] @DateTime.Now.Year - @await Html.PartialAsync("Common/ApplicationVersion")</small>
                 </div>
-                <div class="col-3 col-lg-2 text-right">
+                <div class="col-md-3 text-right">
                     @await Html.PartialAsync("Common/SelectTheme")
                 </div>
-                <div class="col-3 col-lg-2 text-right">
+                <div class="col-md-3 text-right">
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
@@ -116,62 +103,11 @@
     </div>
 
     <environment include="Development">
-        @* <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script> *@
-        <script src="~/dist/js/jquery.js" asp-append-version="true"></script>
-        <script src="~/dist/js/jquery.validate.js" asp-append-version="true"></script>
-        <script src="~/dist/js/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/dist/js/popper.js" asp-append-version="true"></script>
-        <script src="~/dist/js/bootstrap.js" asp-append-version="true"></script>
-        <script src="~/dist/js/cookieconsent.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/holder.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Menu.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Language.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Theme.js" asp-append-version="true"></script>
-        <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        @* <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script> *@
-        <script src="~/dist/js/jquery.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/jquery.validate.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/popper.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/cookieconsent.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/holder.min.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Menu.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Language.js" asp-append-version="true"></script>
-        <script src="~/dist/js/Theme.js" asp-append-version="true"></script>
-        <script src="~/dist/js/CookieConsentHandler.js" asp-append-version="true"></script>
+        <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
     </environment>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const userButton = document.querySelector('.btn-user-responsive');
-
-            function updateButtonSize() {
-                const screenWidth = window.innerWidth;
-
-                // Elimina todas las clases de tamaño
-                userButton.classList.remove('btn-sm', 'btn-lg');
-
-                // Breakpoints de Bootstrap 5 (en píxeles)
-                if (screenWidth < 768) { // xs y sm
-                    userButton.classList.add('btn-sm');
-                }
-                // else if (screenWidth >= 768 && screenWidth < 992) { // md
-                //     // No añade clase (tamaño estándar)
-                // }
-                // else { // lg y xl
-                //     userButton.classList.add('btn-lg');
-                // }
-            }
-
-            // Ejecuta al cargar
-            updateButtonSize();
-            // Asigna el control del evento
-            window.addEventListener('resize', updateButtonSize);
-        });
-    </script>
 
     @await RenderSectionAsync("scripts", required: false)
 </body>

@@ -2,32 +2,8 @@
 @inject IViewLocalizer Localizer
 @if (ViewContext.ModelState.IsValid == false)
 {
-    <!-- Modal -->
-    <div class="modal fade" id="validationErrorsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationErrorsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header bg-secondary text-secondary-emphasis">
-                    <h5 class="modal-title" id="validationErrorsModalLabel">
-                        <i class="fa fa-warning me-2"></i>
-                        @Localizer["Title"]
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div asp-validation-summary="All" class=""></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">@Localizer["Close"]</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script para mostrar automáticamente el modal -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var validationModal = new bootstrap.Modal(document.getElementById('validationErrorsModal'));
-            validationModal.show();
-        });
-    </script>
+	<div class="alert alert-danger">
+		<strong>@Localizer["Title"]</strong>
+		<div asp-validation-summary="All" class="danger"></div>
+	</div>
 }

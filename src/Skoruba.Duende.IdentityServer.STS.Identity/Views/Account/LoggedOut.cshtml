@@ -3,67 +3,34 @@
 @model Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Account.LoggedOutViewModel
 
 @{
-    Layout = "_LayoutAuth";
-
-    // set this so the layout rendering sees an anonymous user
-    ViewData["signed-out"] = true;
+	// set this so the layout rendering sees an anonymous user
+	ViewData["signed-out"] = true;
 }
 
-@section styles {
-    <style type="text/css">
-        .logout-icon {
-            font-size: 3rem;
-            color: #6c757d;
-            margin-bottom: 1rem;
-        }
+<div class="page-header logged-out-container">
+	<h1>
+		@Localizer["Title"]
+		<small>@Localizer["SubTitle"]</small>
+	</h1>
 
-        .btn-return {
-            transition: all 0.3s;
-        }
+	@if (Model.PostLogoutRedirectUri != null)
+	{
+		<div>
+			@Localizer["Click"] <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">@Localizer["Here"]</a> @Localizer["Return"]
+			<span>@Model.ClientName</span>.
+		</div>
+	}
 
-            .btn-return:hover {
-                transform: translateY(-2px);
-            }
-    </style>
-}
-
-<div class="d-flex justify-content-center align-items-center">
-    <div class="card border-0 text-center p-3">
-        <div class="card-body">
-            <!-- Icono de cierre de sesión -->
-            <div class="logout-icon">
-                <i class="fas fa-door-open"></i>
-            </div>
-
-            <h2 class="card-title mb-3">@Localizer["Title"]</h2>
-            <p class="card-text text-muted mb-4">
-                @Localizer["SubTitle"]
-            </p>
-
-            <!-- Opciones adicionales -->
-            <div class="d-grid gap-2">
-                @if (Model.PostLogoutRedirectUri != null)
-                {
-                    <a href="@Model.PostLogoutRedirectUri" class="btn btn-primary btn-return PostLogoutRedirectUri">
-                        <i class="fas fa-sign-in-alt me-2"></i>&nbsp;@Localizer["Click"]&nbsp;@Localizer["Here"]&nbsp;@Localizer["Return"]&nbsp;@Model.ClientName
-                    </a>
-                }
-                <a href='@Url.Action("Index", "Manage")' class="btn btn-outline-secondary btn-return">
-                    <i class="fas fa-home me-2"></i>&nbsp;@Localizer["GoToAccount"]
-                </a>
-            </div>
-        </div>
-    </div>
-    @if (Model.SignOutIframeUrl != null)
-    {
-        <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
-    }
+	@if (Model.SignOutIframeUrl != null)
+	{
+		<iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
+	}
 </div>
 
 @section scripts
-{
-    @if (Model.AutomaticRedirectAfterSignOut)
-    {
-        <script src="~/js/signout-redirect.js"></script>
-    }
+	{
+	@if (Model.AutomaticRedirectAfterSignOut)
+	{
+		<script src="~/js/signout-redirect.js"></script>
+	}
 }

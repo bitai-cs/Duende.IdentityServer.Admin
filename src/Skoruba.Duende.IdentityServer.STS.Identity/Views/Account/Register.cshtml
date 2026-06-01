@@ -2,159 +2,47 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @model Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Account.RegisterViewModel
 @{
-    Layout = "_LayoutAuth";
-
     ViewData["Title"] = Localizer["Title"];
 }
 
-@section styles {
-    <style>
-        .password-strength {
-            height: 5px;
-            margin-top: 5px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .strength-0 {
-            width: 0%;
-            background-color: #fff;
-        }
-
-        .strength-1 {
-            width: 20%;
-            background-color: #dc3545; /* Rojo - Baja */
-        }
-
-        .strength-2 {
-            width: 40%;
-            background-color: #fd7e14; /* Naranja - Media baja */
-        }
-
-        .strength-3 {
-            width: 60%;
-            background-color: #ffc107; /* Amarillo - Media */
-        }
-
-        .strength-4 {
-            width: 80%;
-            background-color: #20c997; /* Verde claro - Media alta */
-        }
-
-        .strength-5 {
-            width: 100%;
-            background-color: #198754; /* Verde - Alta */
-        }
-    </style>
-}
+<h2>@ViewData["Title"].</h2>
 
 @await Html.PartialAsync("_ValidationSummary")
 
-<div class="row justify-content-center">
-    <div class="col-12 col-sm-11 col-md-8 col-lg-7 col-xl-6">
-        <div class="card shadow">
-            <div class="card-body p-4">
-                <h5 class="card-title text-center mb-4">@Localizer["Title"]</h5>
-
-                <form id="signupForm" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" autocomplete="off" novalidate>
-
-                    <!-- Username -->
-                    <div class="mb-3">
-                        <label asp-for="UserName" class="form-label">@Localizer["UserName"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input asp-for="UserName" class="form-control" required />                    
-                            <div class="invalid-feedback">
-                                @Localizer["ValidationUser"]
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Name -->
-                    <!-- <div class="mb-3">
-                        <label for="name" class="form-label">Nombre Completo *</label>
-                        <input type="text" class="form-control" id="name" required>
-                        <div class="invalid-feedback">
-                            Por favor ingresa tu nombre completo.
-                        </div>
-                    </div> -->
-
-                    <div class="mb-3">
-                        <label asp-for="Email" class="control-label">@Localizer["Email"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-inbox"></i></span>
-                            <input asp-for="Email" class="form-control" required />
-                            <div class="invalid-feedback">
-                                @Localizer["ValidationEmail"]
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Teléfono con código de país -->
-                    <!--<div class="mb-3">
-                        <label for="phone" class="form-label">Teléfono *</label>
-                        <div class="input-group">
-                            <select class="form-select" id="countryCode" style="max-width: 120px;">
-                                <option value="+1">+1 (USA)</option>
-                                <option value="+52">+52 (MEX)</option>
-                                <option value="+34">+34 (ESP)</option>
-                                <option value="+54">+54 (ARG)</option>
-                                <option value="+56">+56 (CHL)</option>
-                                <option value="+57">+57 (COL)</option>
-                            </select>
-                            <input type="tel" class="form-control" id="phone" required>
-                        </div>
-                        <div class="invalid-feedback">
-                            Por favor ingresa un número de teléfono válido.
-                        </div>
-                    </div>-->
-
-                    <div class="mb-3">
-                        <label asp-for="Password" class="control-label">@Localizer["Password"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input asp-for="Password" class="form-control" required />                            
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                <i class="fas fa-eye"></i>
-                            </button>                            
-                            <div class="invalid-feedback">
-                                @Localizer["ValidationPassword"]
-                            </div>
-                        </div>                                                
-                        <div class="password-strength mt-2 strength-0" id="passwordStrength"></div>
-                        <small class="text-muted">@Localizer["PasswordTip"]</small>
-                    </div>
-
-                    <div class="mb-4">
-                        <label asp-for="ConfirmPassword" class="control-label">@Localizer["ConfirmPassword"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input asp-for="ConfirmPassword" class="form-control" required />
-                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <div class="invalid-feedback" id="confirmPasswordFeedback">
-                                @Localizer["ValidationPasswordConfirmation"]
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="d-grid gap-2 d-flex">                        
-                        <button type="button" class="btn btn-outline-secondary cancel col-6" onclick="history.back()">@Localizer["GoBack"]</button>
-                        <button type="button" class="btn btn-primary register col-6"><i class="fa fa-check"></i>&nbsp;@Localizer["Button"]</button>
-                    </div>
-                </form>
-            </div>
+<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+    <h4>@Localizer["SubTitle"]</h4>
+    <hr />
+    <div class="form-group">
+        <label asp-for="UserName" class="col-md-2 control-label">@Localizer["UserName"]</label>
+        <div class="col-md-10">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
     </div>
-</div>
-
-@section scripts {
-    <environment include="Development">
-        <script src="~/dist/js/account_register.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/dist/js/account_register.min.js"></script>
-    </environment>
-}
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-2 control-label">@Localizer["Email"]</label>
+        <div class="col-md-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="col-md-2 control-label">@Localizer["Password"]</label>
+        <div class="col-md-10">
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="col-md-2 control-label">@Localizer["ConfirmPassword"]</label>
+        <div class="col-md-10">
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">@Localizer["Button"]</button>
+        </div>
+    </div>
+</form>

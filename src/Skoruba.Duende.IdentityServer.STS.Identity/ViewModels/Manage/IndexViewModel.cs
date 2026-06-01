@@ -4,8 +4,6 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Manage
 {
     public class IndexViewModel
     {
-        public string UserDomain { get; set; }
-        
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }

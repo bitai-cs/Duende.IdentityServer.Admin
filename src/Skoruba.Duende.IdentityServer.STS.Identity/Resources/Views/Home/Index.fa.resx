@@ -126,9 +126,6 @@
   <data name="Discovery" xml:space="preserve">
     <value>سند کشف</value>
   </data>
-  <data name="ExternalLogins" xml:space="preserve">
-    <value />
-  </data>
   <data name="Grants" xml:space="preserve">
     <value>واگذاری های اصرارشده</value>
   </data>
