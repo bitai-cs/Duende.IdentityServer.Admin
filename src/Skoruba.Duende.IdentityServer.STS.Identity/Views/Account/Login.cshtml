@@ -4,98 +4,79 @@
 @inject IViewLocalizer Localizer
 @model Skoruba.Duende.IdentityServer.STS.Identity.ViewModels.Account.LoginViewModel
 @inject IRootConfiguration RootConfiguration
-@{
-    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
-}
-
-@section styles {
-    <style>
-        .btn-social {
-            width: 100%;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .btn-google {
-            background-color: #DB4437;
-            color: white;
-        }
-
-        .btn-microsoft {
-            background-color: #0067b8;
-            color: white;
-        }
-
-        .btn-github {
-            background-color: #333;
-            color: white;
-        }
-    </style>
-}
 
 <div class="login-page">
-    @*<div class="page-header">
+    <div class="page-header">
         <h1>@Localizer["Title"]</h1>
-    </div> *@
+    </div>
 
     @await Html.PartialAsync("_ValidationSummary")
 
-    <div class="row justify-content-center">
+    <div class="row">
 
         @if (Model.EnableLocalLogin)
         {
-            <div class="col-12 col-md-6 mb-4 mb-md-0">
-                <div class="card shadow h-100">
-                    @* <h3 class="card-title text-center mb-4">@Localizer["LocalLogin"]</h3> *@
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-center mb-4">@Localizer["LocalLogin"]</h5>
-
-                        <form asp-route="Login" class="needs-validation" novalidate>
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <h5 class="card-header">@Localizer["LocalLogin"]</h5>
+                    <div class="card-body">
+                        <form asp-route="Login">
                             <input type="hidden" asp-for="ReturnUrl" />
-                            <input type="hidden" name="button" />
 
-                            <div class="mb-3">
-                                @* <label asp-for="Username" class="form-label">Usuario</label> *@
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    <input class="form-control" placeholder="@Localizer[LoginPolicyResolutionLocalizer.GetUserNameLocalizationKey(Model.LoginResolutionPolicy)]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autocomplete="username" autofocus required>
-                                    <div class="invalid-feedback">
-                                        @Localizer["ValidationUsername"]
-                                    </div>
-                                </div>                                
-                            </div>
-
-                            <div class="mb-3">
-                                @* <label asp-for="Password" class="form-label">Contraseña</label> *@
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off" required>
-                                    <div class="invalid-feedback">
-                                        @Localizer["ValidationPassword"]                                        
+                            <fieldset>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="input-username">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" placeholder="@Localizer[LoginPolicyResolutionLocalizer.GetUserNameLocalizationKey(Model.LoginResolutionPolicy)]" asp-for="Username" aria-label="Username" aria-describedby="input-username" autofocus>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            @if (Model.AllowRememberLogin)
-                            {
-                                <div class="mb-3 form-check login-remember">
-                                    <input type="checkbox" class="form-check-input" asp-for="RememberLogin">
-                                    <label class="form-check-label" asp-for="RememberLogin">@Localizer["Remember"]</label>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="input-password">
+                                                    <span class="oi oi-lock-locked" title="Lock" aria-hidden="true"></span>
+                                                </span>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="@Localizer["Password"]" aria-label="Password" aria-describedby="input-password" asp-for="Password" autocomplete="off">
+                                        </div>
+                                    </div>
                                 </div>
-                            }
 
-                            <!--Button-->
-                            <div class="d-grid gap-2 mb-3">
-                                <button type="button" class="btn btn-primary login" value="login"><i class="fa fa-sign-in-alt me-2"></i>@Localizer["Login"]</button>
-                                <button type="button" class="btn btn-outline-secondary cancel" value="cancel">@Localizer["Cancel"]</button>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                @if (RootConfiguration.RegisterConfiguration.Enabled)
+                                @if (Model.AllowRememberLogin)
                                 {
-                                    <a asp-action="Register" asp-controller="Account" class="actionlink" value="forgot">@Localizer["Register"]</a>
+                                    <div class="form-group login-remember row">
+                                        <div class="col-sm-9">
+                                            <div>
+                                                @Localizer["Remember"]
+                                            </div>
+                                            <toggle-button>
+                                                <input asp-for="RememberLogin" type="checkbox">
+                                            </toggle-button>
+                                        </div>
+                                    </div>
                                 }
-                                <a asp-action="ForgotPassword" asp-controller="Account" class="d-block mb-2 actionlink" value="forgot">@Localizer["Forgot"]</a>
-                            </div>
+
+                                <!--Button-->
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary" name="button" value="login">@Localizer["Login"]</button>
+                                        <button class="btn btn-secondary" name="button" value="cancel">@Localizer["Cancel"]</button>
+                                        <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-info" value="forgot">@Localizer["Forgot"]</a>                                        
+                                        @if (RootConfiguration.RegisterConfiguration.Enabled)
+                                        {
+                                            <a asp-action="Register" asp-controller="Account" class="btn btn-dark" value="forgot">@Localizer["Register"]</a>
+                                        }
+                                    </div>
+                                </div>
+                            </fieldset>
                         </form>
                     </div>
                 </div>
@@ -104,79 +85,23 @@
 
         @if (Model.VisibleExternalProviders.Any())
         {
-            <div class="col-12 col-md-6 mb-4 mb-md-0">
-                <div class="card shadow h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-center mb-4">@Localizer["ExternalLogin"]</h5>
-                        <p class="text-center text-muted mb-4">@Localizer["ExternalLoginSubTitle"]</p>
-
-                        @foreach (var provider in Model.VisibleExternalProviders)
-                        {
-                            @if (provider.DisplayName.ToLower() == "github")
+            <div class="col-sm-6 external-providers">
+                <div class="card mt-3">
+                    <h5 class="card-header">@Localizer["ExternalLogin"]</h5>
+                    <div class="card-body">
+                        <ul class="list-inline">
+                            @foreach (var provider in Model.VisibleExternalProviders)
                             {
-                                <button type="button" class="btn btn-social btn-github mb-2 social" onclick="window.location.href='@Url.Action("ExternalLogin", new { provider = provider.AuthenticationScheme, returnUrl = Model.ReturnUrl })'">
-                                    <i class="fab fa-github me-2"></i>@provider.DisplayName
-                                </button>
+                                <li class="list-inline-item">
+                                    <a class="btn btn-primary"
+                                       asp-action="ExternalLogin"
+                                       asp-route-provider="@provider.AuthenticationScheme"
+                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                        @provider.DisplayName
+                                    </a>
+                                </li>
                             }
-                            else if (provider.DisplayName.ToLower() == "openidconnect")
-                            {
-                                <button type="button" class="btn btn-social btn-microsoft mb-2 social" onclick="window.location.href='@Url.Action("ExternalLogin", new { provider = provider.AuthenticationScheme, returnUrl = Model.ReturnUrl })'">
-                                    <i class="fab fa-microsoft me-2"></i>Microsoft
-                                </button>
-                            }
-                            else if (provider.DisplayName.ToLower() == "google")
-                            {
-                                <button type="button" class="btn btn-social btn-google mb-2 social" onclick="window.location.href='@Url.Action("ExternalLogin", new { provider = provider.AuthenticationScheme, returnUrl = Model.ReturnUrl })'">
-                                    <i class="fab fa-google me-2"></i>@provider.DisplayName
-                                </button>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-social btn-success mb-2 social" onclick="window.location.href='@Url.Action("ExternalLogin", new { provider = provider.AuthenticationScheme, returnUrl = Model.ReturnUrl })'">
-                                    <i class="fas fa-user me-2"></i>@provider.DisplayName
-                                </button>
-                            }
-                        }
-
-                        <div class="text-center mt-4">
-                            <p class="text-muted">@Localizer["Acceptance"] <a href="#" class="terms actionlink" data-bs-toggle="modal" data-bs-target="#svcTermsModal">@Localizer["ServiceTermsTitle"]</a> & <a href="#" class="privacy actionlink" data-bs-toggle="modal" data-bs-target="#privPolicyModal">@Localizer["PrivacyPolicyTitle"]</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service terms modal dialog -->
-            <div class="modal fade" id="svcTermsModal" tabindex="-1" aria-labelledby="terminosModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="terminosModalLabel">@Localizer["ServiceTermsTitle"]</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            @await Html.PartialAsync("_ServiceTerms")
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- privacy policy modal dialog -->
-            <div class="modal fade" id="privPolicyModal" tabindex="-1" aria-labelledby="privacidadModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="privacidadModalLabel">@Localizer["PrivacyPolicyTitle"]</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            @await Html.PartialAsync("_PrivacyPolicy")
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Close"]</button>
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -191,12 +116,3 @@
         }
     </div>
 </div>
-
-@section scripts {
-    <environment include="Development">
-        <script src="~/dist/js/account_login.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/dist/js/account_login.min.js" asp-append-version="true"></script>
-    </environment>
-}

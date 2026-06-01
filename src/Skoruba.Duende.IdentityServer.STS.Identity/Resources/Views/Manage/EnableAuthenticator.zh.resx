@@ -135,23 +135,11 @@
   <data name="ScanQRSubTitle" xml:space="preserve">
     <value>空格和大小写无关紧要。</value>
   </data>
-  <data name="Step1" xml:space="preserve">
-    <value>Def</value>
-  </data>
-  <data name="Step2" xml:space="preserve">
-    <value>Step2</value>
-  </data>
-  <data name="Step3" xml:space="preserve">
-    <value>Step3</value>
-  </data>
   <data name="SubTitle" xml:space="preserve">
     <value>要使用身份验证器应用程序，请执行以下步骤：</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>配置身份验证器应用</value>
-  </data>
-  <data name="VerifCodePlaceholder" xml:space="preserve">
-    <value>VerifCodePlaceholder</value>
   </data>
   <data name="Verify" xml:space="preserve">
     <value>验证</value>

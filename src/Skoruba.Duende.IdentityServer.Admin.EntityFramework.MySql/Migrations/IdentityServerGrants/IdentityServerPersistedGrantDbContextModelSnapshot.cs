@@ -35,6 +35,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.MySql.Migrations.I
 
                     b.Property<string>("Data")
                         .IsRequired()
+                        .HasMaxLength(50000)
                         .HasColumnType("longtext");
 
                     b.Property<string>("Description")
@@ -123,6 +124,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.MySql.Migrations.I
 
                     b.Property<string>("Data")
                         .IsRequired()
+                        .HasMaxLength(50000)
                         .HasColumnType("longtext");
 
                     b.Property<string>("Description")

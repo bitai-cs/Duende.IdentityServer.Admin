@@ -30,7 +30,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.MySql.Migrations.I
                 name: "Id",
                 table: "PersistedGrants",
                 type: "bigint",
-                nullable: false)
+                nullable: false,
+                defaultValue: 0L)
                 .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.AddPrimaryKey(

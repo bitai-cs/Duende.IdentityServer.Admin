@@ -9,7 +9,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
 using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -23,7 +22,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Configuration.Identity;
@@ -114,9 +112,6 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button)
         {
-#if DEBUG
-            Thread.Sleep(3000);
-#endif
             // check if we are in the context of an authorization request
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
@@ -147,11 +142,10 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
 
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result;
                 var user = await _userResolver.GetUserAsync(model.Username);
                 if (user != default(TUser))
                 {
-                    result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
                     if (result.Succeeded)
                     {
                         await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
@@ -193,24 +187,9 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
                     {
                         return View("Lockout");
                     }
-
-                    CustomSignInResult _customResult = result as CustomSignInResult;
-                    if (_customResult != null)
-                    {
-                        await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, _customResult.HttpReasonPhrase, clientId: context?.Client.ClientId));
-                        ModelState.AddModelError(string.Empty, $"{_customResult.HttpReasonPhrase} ({_customResult.HttpStatusCode})");
-                    }
-                    else
-                    {
-                        await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
-                        ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
-                    }
                 }
-                else
-                {
-                    await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
-                    ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
-                }
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+                ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
             // something went wrong, show form with error
@@ -630,9 +609,6 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool IsCalledFromRegisterWithoutUsername = false)
         {
-#if DEBUG
-            System.Threading.Thread.Sleep(3000);
-#endif
             if (!_registerConfiguration.Enabled) return View("RegisterFailure");
 
             returnUrl ??= Url.Content("~/");

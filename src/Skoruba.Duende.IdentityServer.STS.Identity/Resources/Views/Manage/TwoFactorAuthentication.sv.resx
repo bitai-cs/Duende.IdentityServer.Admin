@@ -117,18 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2FAEnabled" xml:space="preserve">
-    <value>2FA Enabled</value>
-  </data>
-  <data name="2FAEnabledDescription" xml:space="preserve">
-    <value>-----</value>
-  </data>
   <data name="AddAuthenticator" xml:space="preserve">
     <value>Lägg till autentiseringsapp</value>
-  </data>
-  <data name="AuthAppDescription" xml:space="preserve">
-    <value>AuthAppDescription</value>
-    <comment>AuthAppDescription</comment>
   </data>
   <data name="AuthenticatorApp" xml:space="preserve">
     <value>Autentiseringsapp</value>
@@ -159,12 +149,6 @@
   </data>
   <data name="ResetCodes" xml:space="preserve">
     <value>Resetta återställningskoder</value>
-  </data>
-  <data name="SecurityTip" xml:space="preserve">
-    <value>----</value>
-  </data>
-  <data name="SecurityTipDescription" xml:space="preserve">
-    <value>----</value>
   </data>
   <data name="SetupAuthenticator" xml:space="preserve">
     <value>Konfigurera autentiseringsapp</value>

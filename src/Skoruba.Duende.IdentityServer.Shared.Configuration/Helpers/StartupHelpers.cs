@@ -13,7 +13,6 @@ using SendGrid;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Configuration.Common;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Configuration.Email;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Email;
-using Skoruba.Duende.IdentityServer.Shared.Configuration.Configuration.Identity;
 
 namespace Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers
 {
@@ -99,19 +98,6 @@ namespace Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers
                     }
                 }
             }
-        }
-
-        
-        public static void AddUserDomainsConfiguration(this IServiceCollection services, IConfiguration configuration)
-        {
-            var userDomainsConfiguration = configuration.GetSection(nameof(UserDomainsConfiguration)).Get<UserDomainsConfiguration>();
-
-            if (userDomainsConfiguration == null)
-                userDomainsConfiguration = new UserDomainsConfiguration();
-
-            userDomainsConfiguration.CheckConfigurationIntegrity();
-
-            services.AddSingleton(userDomainsConfiguration);
         }
     }
 }

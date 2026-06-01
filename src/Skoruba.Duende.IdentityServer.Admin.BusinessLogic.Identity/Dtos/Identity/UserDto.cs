@@ -14,10 +14,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Dtos.Identi
         [RegularExpression(@"^[a-zA-Z0-9_@\-\.\+]+$")]
         public string UserName { get; set; }
 
-        public string UserNameView { get; set; }
-
-        public string UserDomain { get; set; }
-
         [Required]
         [EmailAddress]
         public string Email { get; set; }

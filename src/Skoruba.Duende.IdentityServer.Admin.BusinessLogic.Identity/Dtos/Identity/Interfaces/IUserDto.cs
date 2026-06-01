@@ -8,8 +8,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Dtos.Identi
     public interface IUserDto : IBaseUserDto
     {
         string UserName { get; set; }
-        string UserNameView { get; set; }
-        string UserDomain { get; set; }
         string Email { get; set; }
         bool EmailConfirmed { get; set; }
         string PhoneNumber { get; set; }
