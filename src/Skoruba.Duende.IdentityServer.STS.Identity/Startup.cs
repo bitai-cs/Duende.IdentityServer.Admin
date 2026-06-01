@@ -55,6 +55,8 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity
             RegisterAuthorization(services);
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
+
+            services.AddLdapWebApiProvider<UserIdentity>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

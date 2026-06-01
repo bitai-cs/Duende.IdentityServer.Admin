@@ -35,6 +35,7 @@ using Skoruba.Duende.IdentityServer.Admin.UI.Helpers;
 using Skoruba.Duende.IdentityServer.Admin.UI.Helpers.Localization;
 using Skoruba.Duende.IdentityServer.Admin.UnitTests.Mocks;
 using Xunit;
+using Skoruba.Duende.IdentityServer.Shared.Configuration.Configuration.Identity;
 
 namespace Skoruba.Duende.IdentityServer.Admin.UnitTests.Controllers
 {
@@ -571,6 +572,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UnitTests.Controllers
             var logger = serviceProvider.GetRequiredService<ILogger<ConfigurationController>>();
             var tempDataDictionaryFactory = serviceProvider.GetRequiredService<ITempDataDictionaryFactory>();
             var identityService = GetIdentityService(serviceProvider);
+            var userDomainsConfiguration = serviceProvider.GetRequiredService<UserDomainsConfiguration>();
 
             //Get Controller
             var controller = new IdentityController<UserDto<string>, RoleDto<string>,
@@ -578,7 +580,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UnitTests.Controllers
                 UserIdentityUserLogin, UserIdentityRoleClaim, UserIdentityUserToken,
                 UsersDto<UserDto<string>, string>, RolesDto<RoleDto<string>, string>, UserRolesDto<RoleDto<string>, string>,
                 UserClaimsDto<UserClaimDto<string>, string>, UserProviderDto<string>, UserProvidersDto<UserProviderDto<string>, string>, UserChangePasswordDto<string>,
-                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>(identityService, logger, localizer);
+                RoleClaimsDto<RoleClaimDto<string>, string>, UserClaimDto<string>, RoleClaimDto<string>>(identityService, logger, localizer, userDomainsConfiguration);
 
             //Setup TempData for notification in basecontroller
             var httpContext = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
@@ -655,6 +657,9 @@ namespace Skoruba.Duende.IdentityServer.Admin.UnitTests.Controllers
                 });
 
             services.AddLogging();
+
+            //User domains feature configuration
+			services.AddSingleton<UserDomainsConfiguration>();
 
             return services.BuildServiceProvider();
         }

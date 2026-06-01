@@ -126,6 +126,9 @@
   <data name="Discovery" xml:space="preserve">
     <value>Описание сервера</value>
   </data>
+  <data name="ExternalLogins" xml:space="preserve">
+    <value />
+  </data>
   <data name="Grants" xml:space="preserve">
     <value>Постоянные права</value>
   </data>

@@ -513,5 +513,18 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity.Helpers
                 }
             }
         }
+
+        public static void AddLdapWebApiProvider<TUser>(this IServiceCollection services, IConfiguration configuration)
+            where TUser : class
+        {
+            var ldapProviderConfiguration = configuration.GetSection(nameof(LdapWebApiProviderConfiguration<TUser>)).Get<LdapWebApiProviderConfiguration<TUser>>();
+
+            if (ldapProviderConfiguration == null)
+                ldapProviderConfiguration = new LdapWebApiProviderConfiguration<TUser>();
+
+            ldapProviderConfiguration.CheckConfigurationIntegrity();
+
+            services.AddSingleton(ldapProviderConfiguration);
+        }
     }
 }

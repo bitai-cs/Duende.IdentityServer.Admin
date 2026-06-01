@@ -51,6 +51,7 @@
 
 	<ItemGroup>
 		<Folder Include="Helpers\" />
+		<Folder Include="Log\" />
 	</ItemGroup>
 
 </Project>

@@ -54,11 +54,9 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 name: "Data",
                 table: "PersistedGrants",
                 type: "longtext CHARACTER SET utf8mb4",
-                maxLength: 50000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "longtext",
-                oldMaxLength: 50000)
+                oldType: "longtext")
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
@@ -66,11 +64,9 @@ namespace SkorubaDuende.IdentityServerAdmin.Admin.EntityFramework.MySql.Migratio
                 name: "Data",
                 table: "DeviceCodes",
                 type: "longtext CHARACTER SET utf8mb4",
-                maxLength: 50000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "longtext",
-                oldMaxLength: 50000)
+                oldType: "longtext")
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
         }

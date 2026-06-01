@@ -79,6 +79,10 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL.Migrati
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
+                    
+                    b.Property<string>("UserDomain")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
 
                     b.ToTable("Users");
                 });

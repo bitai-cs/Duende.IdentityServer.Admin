@@ -81,6 +81,10 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.SqlServer.Migratio
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.Property<string>("UserDomain")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
                     b.ToTable("Users");
                 });
 

@@ -19,14 +19,15 @@
         "jquery-validation-unobtrusive": "3.2.11",
         "node-sass": "4.14.1",
         "open-iconic": "1.1.1",
-        "popper.js": "1.16.1"
+        "popper.js": "1.16.1",
+        "skoruba-duende-identity-server-admin-sts": "file:"
     },
     "devDependencies": {
+        "del": "5.1.0",
         "gulp": "4.0.2",
-        "gulp-concat": "2.6.1",
-        "gulp-uglify": "3.0.2",
-        "gulp-sass": "4.1.0",
         "gulp-clean-css": "4.3.0",
-        "del": "5.1.0"
+        "gulp-concat": "2.6.1",
+        "gulp-sass": "4.1.0",
+        "gulp-uglify": "3.0.2"
     }
 }
