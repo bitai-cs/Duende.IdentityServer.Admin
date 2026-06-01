@@ -44,6 +44,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
                 .Include(x => x.IdentityProviderRestrictions)
                 .Include(x => x.AllowedCorsOrigins)
                 .Include(x => x.Properties)
+                .AsSplitQuery()
                 .Where(x => x.Id == clientId)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
@@ -51,18 +52,35 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<Client>();
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
 
-            Expression<Func<Client, bool>> searchCondition = x => x.ClientId.Contains(search) || x.ClientName.Contains(search);
-            var clients = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
+            var query = DbContext.Clients
+                .Include(x => x.Properties)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(x => x.ClientId.Contains(search) || x.ClientName.Contains(search));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var clients = await query
+                .PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            var pagedList = new PagedList<Client>
+            {
+                TotalCount = totalCount,
+                PageSize = pageSize
+            };
+
             pagedList.Data.AddRange(clients);
-            pagedList.TotalCount = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
-            pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
+        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0, bool excludeIdentityResources = false, bool excludeApiScopes = false)
         {
             var identityResources = await DbContext.IdentityResources
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
@@ -74,6 +92,16 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
+            if (excludeIdentityResources)
+            {
+                return apiScopes;
+            }
+            
+            if (excludeApiScopes)
+            {
+                return identityResources;
+            }
+            
             var scopes = identityResources.Concat(apiScopes).TakeIf(x => x, limit > 0, limit).ToList();
 
             return scopes;
@@ -212,12 +240,13 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<ClientSecret>> GetClientSecretsAsync(int clientId, int page = 1, int pageSize = 10)
         {
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
+
             var pagedList = new PagedList<ClientSecret>();
 
             var secrets = await DbContext.ClientSecrets
                 .Where(x => x.Client.Id == clientId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .PageBy(x => x.Id, page, pageSize)
                 .ToListAsync();
 
             pagedList.Data.AddRange(secrets);
@@ -238,6 +267,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<ClientClaim>> GetClientClaimsAsync(int clientId, int page = 1, int pageSize = 10)
         {
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
+
             var pagedList = new PagedList<ClientClaim>();
 
             var claims = await DbContext.ClientClaims.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
@@ -252,6 +283,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<ClientProperty>> GetClientPropertiesAsync(int clientId, int page = 1, int pageSize = 10)
         {
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
+
             var pagedList = new PagedList<ClientProperty>();
 
             var properties = await DbContext.ClientProperties.Where(x => x.Client.Id == clientId).PageBy(x => x.Id, page, pageSize)
@@ -352,6 +385,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
                 .Include(x => x.IdentityProviderRestrictions)
                 .Include(x => x.AllowedCorsOrigins)
                 .Include(x => x.Properties)
+                .AsSplitQuery()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == client.Id);
 

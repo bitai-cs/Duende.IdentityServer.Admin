@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -6,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IdentityModel;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.DbContexts;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.Entities.Identity;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers;
@@ -13,6 +17,8 @@ using Skoruba.Duende.IdentityServer.STS.Identity.Configuration;
 using Skoruba.Duende.IdentityServer.STS.Identity.Configuration.Constants;
 using Skoruba.Duende.IdentityServer.STS.Identity.Configuration.Interfaces;
 using Skoruba.Duende.IdentityServer.STS.Identity.Helpers;
+using Skoruba.Duende.IdentityServer.STS.Identity.Passkeys;
+using Microsoft.AspNetCore.Identity;
 
 namespace Skoruba.Duende.IdentityServer.STS.Identity
 {
@@ -31,6 +37,10 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
+
+            // Configure ServerSideSessions
+            services.Configure<ServerSideSessionsConfiguration>(Configuration.GetSection(ServerSideSessionsConfiguration.SectionName));
+
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
 
@@ -50,9 +60,24 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity
             // Including settings for MVC and Localization
             // If you want to change primary keys or use another db model for Asp.Net Core Identity:
             services.AddMvcWithLocalization<UserIdentity, string>(Configuration);
+            services.AddRazorPages();
 
             // Add authorization policies for MVC
             RegisterAuthorization(services);
+
+            // Add IHttpContextAccessor for Passkey TagHelper
+            services.AddHttpContextAccessor();
+
+            // Configure IdentityPasskeyOptions for development
+            if (Environment.IsDevelopment())
+            {
+                services.Configure<IdentityPasskeyOptions>(options =>
+                {
+                    // Allow localhost origins for development
+                    options.ValidateOrigin = context => ValueTask.FromResult(
+                        context.Origin.StartsWith("https://localhost") || context.Origin.StartsWith("http://localhost"));
+                });
+            }
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, IdentityServerDataProtectionDbContext>(Configuration);
         }
@@ -85,6 +110,9 @@ namespace Skoruba.Duende.IdentityServer.STS.Identity
             app.UseAuthorization();
             app.UseEndpoints(endpoint =>
             {
+                // Map passkey endpoints for passkey authentication
+                endpoint.MapPasskeyEndpoints<UserIdentity>();
+
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {

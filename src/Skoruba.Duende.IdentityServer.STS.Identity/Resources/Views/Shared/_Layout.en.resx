@@ -132,6 +132,9 @@
   <data name="Grants" xml:space="preserve">
     <value>Grants</value>
   </data>
+  <data name="ServerSessionsMenu" xml:space="preserve">
+    <value>Server Sessions</value>
+  </data>
   <data name="ManagePersonalData" xml:space="preserve">
     <value>My personal data</value>
   </data>
@@ -141,10 +144,19 @@
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="Passkeys" xml:space="preserve">
+    <value>Passkeys</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="Signout" xml:space="preserve">
-    <value>logout</value>
+    <value>Logout</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
 </root>

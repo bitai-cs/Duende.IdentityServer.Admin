@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Description>Business Logic layer for the administration of the Asp.Net Core Identity and Duende IdentityServer</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.4.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.7" />
+		<PackageReference Include="Riok.Mapperly" Version="4.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -16,14 +17,7 @@
 		<ProjectReference Include="..\Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared\Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Update="Resources\IdentityServiceResource.resx">
-			<Generator></Generator>
-		</EmbeddedResource>
-	</ItemGroup>
-
 </Project>
-
 
 
 

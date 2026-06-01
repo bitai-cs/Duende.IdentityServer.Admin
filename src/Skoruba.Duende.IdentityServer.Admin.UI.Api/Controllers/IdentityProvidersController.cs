@@ -34,11 +34,11 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<IdentityProvidersApiDto>> Get(string searchText, int page = 1, int pageSize = 10)
         {
             var identityProvidersDto = await _identityProviderService.GetIdentityProvidersAsync(searchText, page, pageSize);
-            var identityProvidersApiDto = identityProvidersDto.ToIdentityProviderApiModel<IdentityProvidersApiDto>();
+            var identityProvidersApiDto = identityProvidersDto.ToIdentityProvidersApiDto();
 
             return Ok(identityProvidersApiDto);
         }
-        
+
         [HttpGet(nameof(CanInsertIdentityProvider))]
         public async Task<ActionResult<bool>> CanInsertIdentityProvider(int id, string schema)
         {
@@ -48,24 +48,24 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
                 Scheme = schema
             });
 
-            return exists;
+            return Ok(exists);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IdentityProviderApiDto>> Get(int id)
         {
             var identityProviderDto = await _identityProviderService.GetIdentityProviderAsync(id);
-            var identityProviderApiModel = identityProviderDto.ToIdentityProviderApiModel<IdentityProviderApiDto>();
+            var identityProviderApiModel = identityProviderDto.ToIdentityProviderApiDto();
 
             return Ok(identityProviderApiModel);
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(IdentityProviderApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Post([FromBody] IdentityProviderApiDto identityProviderApi)
+        public async Task<ActionResult<IdentityProviderApiDto>> Post([FromBody] IdentityProviderApiDto identityProviderApi)
         {
-            var identityProviderDto = identityProviderApi.ToIdentityProviderApiModel<IdentityProviderDto>();
+            var identityProviderDto = identityProviderApi.ToIdentityProviderDto();
 
             if (!identityProviderDto.Id.Equals(default))
             {
@@ -79,17 +79,22 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Put([FromBody] IdentityProviderApiDto identityProviderApi)
         {
-            var identityProvider = identityProviderApi.ToIdentityProviderApiModel<IdentityProviderDto>();
+            var identityProvider = identityProviderApi.ToIdentityProviderDto();
 
             await _identityProviderService.GetIdentityProviderAsync(identityProvider.Id);
             await _identityProviderService.UpdateIdentityProviderAsync(identityProvider);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var identityProvider = new IdentityProviderDto { Id = id };
@@ -97,8 +102,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
             await _identityProviderService.GetIdentityProviderAsync(identityProvider.Id);
             await _identityProviderService.DeleteIdentityProviderAsync(identityProvider);
 
-            return Ok();
+            return NoContent();
         }
-        
+
     }
 }

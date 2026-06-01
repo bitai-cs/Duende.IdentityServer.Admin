@@ -36,7 +36,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientsApiDto>> Get(string searchText, int page = 1, int pageSize = 10)
         {
             var clientsDto = await _clientService.GetClientsAsync(searchText, page, pageSize);
-            var clientsApiDto = clientsDto.ToClientApiModel<ClientsApiDto>();
+            var clientsApiDto = clientsDto.ToClientsApiDto();
 
             return Ok(clientsApiDto);
         }
@@ -45,7 +45,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientApiDto>> Get(int id)
         {
             var clientDto = await _clientService.GetClientAsync(id);
-            var clientApiDto = clientDto.ToClientApiModel<ClientApiDto>();
+            var clientApiDto = clientDto.ToClientApiDto();
 
             return Ok(clientApiDto);
         }
@@ -57,7 +57,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return accessTokenTypes;
         }
-        
+
         [HttpGet(nameof(GetTokenExpirations))]
         public ActionResult<List<SelectItemDto>> GetTokenExpirations()
         {
@@ -65,7 +65,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return tokenExpirations;
         }
-        
+
         [HttpGet(nameof(GetTokenUsage))]
         public ActionResult<List<SelectItemDto>> GetTokenUsage()
         {
@@ -73,7 +73,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return tokenUsage;
         }
-        
+
         [HttpGet(nameof(GetProtocolTypes))]
         public ActionResult<List<SelectItemDto>> GetProtocolTypes()
         {
@@ -81,7 +81,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return protocolTypes;
         }
-        
+
         [HttpGet(nameof(GetDPoPValidationModes))]
         public ActionResult<List<SelectItemDto>> GetDPoPValidationModes()
         {
@@ -89,15 +89,15 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return dPoPValidationModes;
         }
-        
+
         [HttpGet(nameof(GetScopes))]
-        public async Task<ActionResult<List<string>>> GetScopes(string scope, int limit = 0)
+        public async Task<ActionResult<List<string>>> GetScopes(string scope, int limit = 0, bool excludeIdentityResources = false, bool excludeApiScopes = false)
         {
-            var scopes = await _clientService.GetScopesAsync(scope, limit);
+            var scopes = await _clientService.GetScopesAsync(scope, limit, excludeIdentityResources, excludeApiScopes);
 
             return scopes;
         }
-        
+
         [HttpGet(nameof(GetGrantTypes))]
         public ActionResult<List<SelectItemDto>> GetGrantTypes(string grant, bool includeObsoleteGrants, int limit = 0)
         {
@@ -105,7 +105,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return grants;
         }
-        
+
         [HttpGet(nameof(GetHashTypes))]
         public ActionResult<List<SelectItemDto>> GetHashTypes()
         {
@@ -113,7 +113,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return hashTypes;
         }
-        
+
         [HttpGet(nameof(GetSecretTypes))]
         public ActionResult<List<SelectItemDto>> GetSecretTypes()
         {
@@ -121,7 +121,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return secretTypes;
         }
-        
+
         [HttpGet(nameof(GetStandardClaims))]
         public ActionResult<List<string>> GetStandardClaims(string claim, int limit = 0)
         {
@@ -129,7 +129,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return standardClaims;
         }
-        
+
         [HttpGet(nameof(GetSigningAlgorithms))]
         public ActionResult<List<string>> GetSigningAlgorithms(string algorithm, int limit = 0)
         {
@@ -137,25 +137,25 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
 
             return signingAlgorithms;
         }
-        
+
         [HttpGet(nameof(CanInsertClient))]
         public async Task<ActionResult<bool>> CanInsertClient(int id, string clientId, bool isCloned)
         {
             var clientExists = await _clientService.CanInsertClientAsync(new ClientDto()
             {
-               Id = id,
-               ClientId = clientId,
+                Id = id,
+                ClientId = clientId,
             }, isCloned);
 
             return clientExists;
         }
-      
+
         [HttpPost]
         [ProducesResponseType(typeof(ClientApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Post([FromBody]ClientApiDto client)
+        public async Task<ActionResult<ClientApiDto>> Post([FromBody] ClientApiDto client)
         {
-            var clientDto = client.ToClientApiModel<ClientDto>();
+            var clientDto = client.ToClientDto();
 
             if (!clientDto.Id.Equals(default))
             {
@@ -169,21 +169,22 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Put([FromBody]ClientApiDto client)
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Put([FromBody] ClientApiDto client)
         {
-            var clientDto = client.ToClientApiModel<ClientDto>();
+            var clientDto = client.ToClientDto();
 
             await _clientService.GetClientAsync(clientDto.Id);
             await _clientService.UpdateClientAsync(clientDto, updateClientClaims: true, updateClientProperties: true);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var clientDto = new ClientDto { Id = id };
@@ -191,21 +192,21 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
             await _clientService.GetClientAsync(clientDto.Id);
             await _clientService.RemoveClientAsync(clientDto);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("Clone")]
         [ProducesResponseType(typeof(ClientApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostClientClone([FromBody]ClientCloneApiDto client)
+        public async Task<ActionResult<ClientApiDto>> PostClientClone([FromBody] ClientCloneApiDto client)
         {
-            var clientCloneDto = client.ToClientApiModel<ClientCloneDto>();
+            var clientCloneDto = client.ToClientCloneDto();
 
             var originalClient = await _clientService.GetClientAsync(clientCloneDto.Id);
             var id = await _clientService.CloneClientAsync(clientCloneDto);
             originalClient.Id = id;
-            
-            var clonedClient = originalClient.ToClientApiModel<ClientApiDto>();
+
+            var clonedClient = originalClient.ToClientApiDto();
 
             return CreatedAtAction(nameof(Get), new { id }, clonedClient);
         }
@@ -214,7 +215,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientSecretsApiDto>> GetSecrets(int id, int page = 1, int pageSize = 10)
         {
             var clientSecretsDto = await _clientService.GetClientSecretsAsync(id, page, pageSize);
-            var clientSecretsApiDto = clientSecretsDto.ToClientApiModel<ClientSecretsApiDto>();
+            var clientSecretsApiDto = clientSecretsDto.ToClientSecretsApiDto();
 
             return Ok(clientSecretsApiDto);
         }
@@ -223,7 +224,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientSecretApiDto>> GetSecret(int secretId)
         {
             var clientSecretsDto = await _clientService.GetClientSecretAsync(secretId);
-            var clientSecretDto = clientSecretsDto.ToClientApiModel<ClientSecretApiDto>();
+            var clientSecretDto = clientSecretsDto.ToClientSecretApiDto();
 
             return Ok(clientSecretDto);
         }
@@ -231,9 +232,9 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         [HttpPost("{id}/Secrets")]
         [ProducesResponseType(typeof(ClientSecretApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostSecret(int id, [FromBody]ClientSecretApiDto clientSecretApi)
+        public async Task<ActionResult<ClientSecretApiDto>> PostSecret(int id, [FromBody] ClientSecretApiDto clientSecretApi)
         {
-            var secretsDto = clientSecretApi.ToClientApiModel<ClientSecretsDto>();
+            var secretsDto = clientSecretApi.ToClientSecretsDto();
             secretsDto.ClientId = id;
 
             if (!secretsDto.ClientSecretId.Equals(default))
@@ -248,8 +249,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         }
 
         [HttpDelete("Secrets/{secretId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteSecret(int secretId)
         {
             var clientSecret = new ClientSecretsDto { ClientSecretId = secretId };
@@ -257,14 +258,14 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
             await _clientService.GetClientSecretAsync(clientSecret.ClientSecretId);
             await _clientService.DeleteClientSecretAsync(clientSecret);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}/Properties")]
         public async Task<ActionResult<ClientPropertiesApiDto>> GetProperties(int id, int page = 1, int pageSize = 10)
         {
             var clientPropertiesDto = await _clientService.GetClientPropertiesAsync(id, page, pageSize);
-            var clientPropertiesApiDto = clientPropertiesDto.ToClientApiModel<ClientPropertiesApiDto>();
+            var clientPropertiesApiDto = clientPropertiesDto.ToClientPropertiesApiDto();
 
             return Ok(clientPropertiesApiDto);
         }
@@ -273,7 +274,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientPropertyApiDto>> GetProperty(int propertyId)
         {
             var clientPropertiesDto = await _clientService.GetClientPropertyAsync(propertyId);
-            var clientPropertyApiDto = clientPropertiesDto.ToClientApiModel<ClientPropertyApiDto>();
+            var clientPropertyApiDto = clientPropertiesDto.ToClientPropertyApiDto();
 
             return Ok(clientPropertyApiDto);
         }
@@ -281,9 +282,9 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         [HttpPost("{id}/Properties")]
         [ProducesResponseType(typeof(ClientPropertyApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostProperty(int id, [FromBody]ClientPropertyApiDto clientPropertyApi)
+        public async Task<ActionResult<ClientPropertyApiDto>> PostProperty(int id, [FromBody] ClientPropertyApiDto clientPropertyApi)
         {
-            var clientPropertiesDto = clientPropertyApi.ToClientApiModel<ClientPropertiesDto>();
+            var clientPropertiesDto = clientPropertyApi.ToClientPropertiesDto();
             clientPropertiesDto.ClientId = id;
 
             if (!clientPropertiesDto.ClientPropertyId.Equals(default))
@@ -298,8 +299,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         }
 
         [HttpDelete("Properties/{propertyId}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteProperty(int propertyId)
         {
             var clientProperty = new ClientPropertiesDto { ClientPropertyId = propertyId };
@@ -307,14 +308,14 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
             await _clientService.GetClientPropertyAsync(clientProperty.ClientPropertyId);
             await _clientService.DeleteClientPropertyAsync(clientProperty);
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}/Claims")]
         public async Task<ActionResult<ClientClaimsApiDto>> GetClaims(int id, int page = 1, int pageSize = 10)
         {
             var clientClaimsDto = await _clientService.GetClientClaimsAsync(id, page, pageSize);
-            var clientClaimsApiDto = clientClaimsDto.ToClientApiModel<ClientClaimsApiDto>();
+            var clientClaimsApiDto = clientClaimsDto.ToClientClaimsApiDto();
 
             return Ok(clientClaimsApiDto);
         }
@@ -323,7 +324,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<ClientClaimApiDto>> GetClaim(int claimId)
         {
             var clientClaimsDto = await _clientService.GetClientClaimAsync(claimId);
-            var clientClaimApiDto = clientClaimsDto.ToClientApiModel<ClientClaimApiDto>();
+            var clientClaimApiDto = clientClaimsDto.ToClientClaimApiDto();
 
             return Ok(clientClaimApiDto);
         }
@@ -331,9 +332,9 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         [HttpPost("{id}/Claims")]
         [ProducesResponseType(typeof(ClientClaimApiDto), 201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostClaim(int id, [FromBody]ClientClaimApiDto clientClaimApiDto)
+        public async Task<ActionResult<ClientClaimApiDto>> PostClaim(int id, [FromBody] ClientClaimApiDto clientClaimApiDto)
         {
-            var clientClaimsDto = clientClaimApiDto.ToClientApiModel<ClientClaimsDto>();
+            var clientClaimsDto = clientClaimApiDto.ToClientClaimsDto();
             clientClaimsDto.ClientId = id;
 
             if (!clientClaimsDto.ClientClaimId.Equals(default))
@@ -348,6 +349,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         }
 
         [HttpDelete("Claims/{claimId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteClaim(int claimId)
         {
             var clientClaimsDto = new ClientClaimsDto { ClientClaimId = claimId };
@@ -355,7 +358,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
             await _clientService.GetClientClaimAsync(claimId);
             await _clientService.DeleteClientClaimAsync(clientClaimsDto);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

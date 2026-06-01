@@ -30,7 +30,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         public async Task<ActionResult<KeysApiDto>> Get(int page = 1, int pageSize = 10)
         {
             var keys = await _keyService.GetKeysAsync(page, pageSize);
-            var keysApi = keys.ToKeyApiModel<KeysApiDto>();
+            var keysApi = keys.ToKeysApiDto();
 
             return Ok(keysApi);
         }
@@ -40,17 +40,19 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Controllers
         {
             var key = await _keyService.GetKeyAsync(id);
 
-            var keyApi = key.ToKeyApiModel<KeyApiDto>();
+            var keyApi = key.ToKeyApiDto();
 
             return Ok(keyApi);
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(string id)
         {
             await _keyService.DeleteKeyAsync(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

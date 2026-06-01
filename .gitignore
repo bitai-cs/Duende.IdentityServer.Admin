@@ -198,6 +198,10 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+
+# Playwright artifacts
+playwright-report/
+test-results/
 orleans.codegen.cs
 
 # Since there are multiple workflows, uncomment next line to ignore bower_components
@@ -284,3 +288,6 @@ __pycache__/
 appsettings.*.json
 
 /shared/nginx/certs/
+
+# macOS Finder metadata
+.DS_Store

@@ -29,6 +29,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<IdentityResource>> GetIdentityResourcesAsync(string search, int page = 1, int pageSize = 10)
         {
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
+
             var pagedList = new PagedList<IdentityResource>();
 
             Expression<Func<IdentityResource, bool>> searchCondition = x => x.Name.Contains(search);
@@ -53,6 +55,8 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<IdentityResourceProperty>> GetIdentityResourcePropertiesAsync(int identityResourceId, int page = 1, int pageSize = 10)
         {
+            pageSize = QueryableExtensions.NormalizePageSize(pageSize);
+
             var pagedList = new PagedList<IdentityResourceProperty>();
 
             var properties = await DbContext.IdentityResourceProperties.Where(x => x.IdentityResource.Id == identityResourceId).PageBy(x => x.Id, page, pageSize)
@@ -117,13 +121,25 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
             if (identityResource.Id == 0)
             {
                 var existsWithSameName = await DbContext.IdentityResources.Where(x => x.Name == identityResource.Name).SingleOrDefaultAsync();
-                return existsWithSameName == null;
+                if (existsWithSameName != null)
+                {
+                    return false;
+                }
             }
             else
             {
                 var existsWithSameName = await DbContext.IdentityResources.Where(x => x.Name == identityResource.Name && x.Id != identityResource.Id).SingleOrDefaultAsync();
-                return existsWithSameName == null;
+                if (existsWithSameName != null)
+                {
+                    return false;
+                }
             }
+
+            var existsApiScopeWithSameName = await DbContext.ApiScopes
+                .Where(x => x.Name == identityResource.Name)
+                .SingleOrDefaultAsync();
+
+            return existsApiScopeWithSameName == null;
         }
 
         private async Task RemoveIdentityResourceClaimsAsync(IdentityResource identityResource)
