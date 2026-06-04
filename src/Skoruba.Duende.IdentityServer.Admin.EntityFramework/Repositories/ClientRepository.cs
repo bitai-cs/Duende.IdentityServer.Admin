@@ -51,18 +51,33 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
 
         public virtual async Task<PagedList<Client>> GetClientsAsync(string search = "", int page = 1, int pageSize = 10)
         {
-            var pagedList = new PagedList<Client>();
+            var query = DbContext.Clients
+                .Include(x => x.Properties)
+                .AsQueryable();
 
-            Expression<Func<Client, bool>> searchCondition = x => x.ClientId.Contains(search) || x.ClientName.Contains(search);
-            var clients = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).PageBy(x => x.Id, page, pageSize).ToListAsync();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(x => x.ClientId.Contains(search) || x.ClientName.Contains(search));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var clients = await query
+                .PageBy(x => x.Id, page, pageSize)
+                .ToListAsync();
+
+            var pagedList = new PagedList<Client>
+            {
+                TotalCount = totalCount,
+                PageSize = pageSize
+            };
+
             pagedList.Data.AddRange(clients);
-            pagedList.TotalCount = await DbContext.Clients.WhereIf(!string.IsNullOrEmpty(search), searchCondition).CountAsync();
-            pagedList.PageSize = pageSize;
 
             return pagedList;
         }
 
-        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
+        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0, bool excludeIdentityResources = false, bool excludeApiScopes = false)
         {
             var identityResources = await DbContext.IdentityResources
                 .WhereIf(!string.IsNullOrEmpty(scope), x => x.Name.Contains(scope))
@@ -74,6 +89,16 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Repositories
                 .TakeIf(x => x.Id, limit > 0, limit)
                 .Select(x => x.Name).ToListAsync();
 
+            if (excludeIdentityResources)
+            {
+                return apiScopes;
+            }
+            
+            if (excludeApiScopes)
+            {
+                return identityResources;
+            }
+            
             var scopes = identityResources.Concat(apiScopes).TakeIf(x => x, limit > 0, limit).ToList();
 
             return scopes;
