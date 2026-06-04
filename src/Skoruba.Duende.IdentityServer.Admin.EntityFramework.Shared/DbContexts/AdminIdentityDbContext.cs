@@ -1,4 +1,4 @@
-// Copyright (c) Jan Škoruba. All Rights Reserved.
+﻿// Copyright (c) Jan Škoruba. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0.
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -31,7 +31,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.DbContexts
             builder.Entity<UserIdentityUserRole>().ToTable(_schemaConfiguration.IdentityUserRoles);
 
             builder.Entity<UserIdentity>().ToTable(_schemaConfiguration.IdentityUsers);
-            builder.Entity<UserIdentity>().Property(x => x.UserDomain).HasMaxLength(256);
             builder.Entity<UserIdentityUserLogin>().ToTable(_schemaConfiguration.IdentityUserLogins);
             builder.Entity<UserIdentityUserClaim>().ToTable(_schemaConfiguration.IdentityUserClaims);
             builder.Entity<UserIdentityUserToken>().ToTable(_schemaConfiguration.IdentityUserTokens);

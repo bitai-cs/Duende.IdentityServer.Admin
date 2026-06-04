@@ -84,10 +84,7 @@ namespace SkorubaDuende.IdentityServerAdmin.STS.Identity.Helpers
 
                     try
                     {
-                        var bytes = File.ReadAllBytes(certificateConfiguration.SigningCertificatePfxFilePath);
-                        var cert = X509CertificateLoader.LoadPkcs12(bytes, certificateConfiguration.SigningCertificatePfxFilePassword);
-    
-                        builder.AddSigningCredential(cert);
+                        builder.AddSigningCredential(new X509Certificate2(certificateConfiguration.SigningCertificatePfxFilePath, certificateConfiguration.SigningCertificatePfxFilePassword));
                     }
                     catch (Exception e)
                     {
@@ -164,12 +161,8 @@ namespace SkorubaDuende.IdentityServerAdmin.STS.Identity.Helpers
                 {
                     try
                     {
-                        var validationCertBytes = File.ReadAllBytes(certificateConfiguration.ValidationCertificatePfxFilePath);
-                        var validationCertificate = X509CertificateLoader.LoadPkcs12(
-                            validationCertBytes,
-                            certificateConfiguration.ValidationCertificatePfxFilePassword);
+                        builder.AddValidationKey(new X509Certificate2(certificateConfiguration.ValidationCertificatePfxFilePath, certificateConfiguration.ValidationCertificatePfxFilePassword));
 
-                        builder.AddValidationKey(validationCertificate);
                     }
                     catch (Exception e)
                     {

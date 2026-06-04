@@ -91,10 +91,10 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Services
 
             var originalIdentityProvider = await GetIdentityProviderAsync(identityProvider.Id);
 
-            if (identityProvider.Properties == null)
-            {
-                identityProvider.Properties = new Dictionary<int, IdentityProviderPropertyDto>();
-            }
+            //if (identityProvider.Properties == null)
+            //{
+            //    identityProvider.Properties = new List<IdentityProviderPropertyDto>(originalIdentityProvider.Properties);
+            //}
 
             var entity = identityProvider.ToEntity();
 

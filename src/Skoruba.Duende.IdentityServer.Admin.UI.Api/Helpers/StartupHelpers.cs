@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Duende.IdentityServer.EntityFramework.Options;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -296,7 +295,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Helpers
                 .AddDbContextCheck<TLogDbContext>("LogDbContext")
                 .AddDbContextCheck<TAuditLoggingDbContext>("AuditLogDbContext")
                 .AddDbContextCheck<TDataProtectionDbContext>("DataProtectionDbContext")
-                .AddOpenIdConnectServer(oidcSvrUri: new Uri(identityServerUri), name: "Identity Server");
+                .AddIdentityServer(idSvrUri: new Uri(identityServerUri), name: "Identity Server");
 
             var serviceProvider = services.BuildServiceProvider();
             var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
@@ -427,13 +426,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Helpers
                 TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto>();
             
             services.AddAuditEventLogging<TAdminAuditLogDbContext, TAuditLog>(configuration);
-        }
-        
-        public static string GetInformationalVersion(this Type typeInAssembly)
-        {
-            ArgumentNullException.ThrowIfNull(typeInAssembly);
-
-            return typeInAssembly.Assembly.GetName().Version?.ToString() ?? string.Empty;
         }
     }
 }

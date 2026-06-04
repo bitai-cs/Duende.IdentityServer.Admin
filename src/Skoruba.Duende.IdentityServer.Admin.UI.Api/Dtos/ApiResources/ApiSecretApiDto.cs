@@ -21,7 +21,5 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Dtos.ApiResources
         public string HashType { get; set; }
 
         public DateTime? Expiration { get; set; }
-        
-        public DateTime Created { get; set; }
     }
 }
