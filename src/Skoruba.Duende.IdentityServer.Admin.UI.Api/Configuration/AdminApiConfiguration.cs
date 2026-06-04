@@ -5,8 +5,6 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Api.Configuration
 {
     public class AdminApiConfiguration
     {
-        public string ApplicationName { get; set; }
-        
         public string ApiName { get; set; }
 
         public string ApiVersion { get; set; }

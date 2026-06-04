@@ -30,8 +30,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Services.Interfaces
 
         Task<ClientsDto> GetClientsAsync(string search, int page = 1, int pageSize = 10);
 
-        Task<List<string>> GetScopesAsync(string scope, int limit = 0, bool excludeIdentityResources = false,
-            bool excludeApiScopes = false);
+        Task<List<string>> GetScopesAsync(string scope, int limit = 0);
 
         List<SelectItemDto> GetGrantTypes(string grant, bool includeObsoleteGrants, int limit = 0);
 

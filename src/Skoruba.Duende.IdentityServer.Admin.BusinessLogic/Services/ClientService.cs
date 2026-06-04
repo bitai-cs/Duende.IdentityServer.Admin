@@ -185,7 +185,7 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Services
 
             var originalClient = await GetClientAsync(client.Id);
 
-            var updated = await ClientRepository.UpdateClientAsync(clientEntity, updateClientClaims, updateClientProperties);
+            var updated = await ClientRepository.UpdateClientAsync(clientEntity);
 
             await AuditEventLogger.LogEventAsync(new ClientUpdatedEvent(originalClient, client));
 
@@ -258,9 +258,9 @@ namespace Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Services
             return clientsDto;
         }
 
-        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0, bool excludeIdentityResources = false, bool excludeApiScopes = false)
+        public virtual async Task<List<string>> GetScopesAsync(string scope, int limit = 0)
         {
-            var scopes = await ClientRepository.GetScopesAsync(scope, limit, excludeIdentityResources, excludeApiScopes);
+            var scopes = await ClientRepository.GetScopesAsync(scope, limit);
 
             return scopes;
         }

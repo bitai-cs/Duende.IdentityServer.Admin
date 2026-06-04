@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
-using Duende.IdentityModel;
+using IdentityModel;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

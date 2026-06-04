@@ -1,5 +1,5 @@
 {
-  "runtime": "Net90",
+  "runtime": "Net80",
   "defaultVariables": null,
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
@@ -76,14 +76,14 @@
       "exportTypes": true,
       "wrapDtoExceptions": false,
       "exceptionClass": "SwaggerException",
-      "clientBaseClass": "WebApiClientBase",
+      "clientBaseClass": "",
       "wrapResponses": false,
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
       "protectedMethods": [],
       "configurationClass": null,
-      "useTransformOptionsMethod": true,
+      "useTransformOptionsMethod": false,
       "useTransformResultMethod": false,
       "generateDtoTypes": true,
       "operationGenerationMode": "MultipleClientsFromOperationId",
@@ -92,7 +92,7 @@
       "typeStyle": "Class",
       "classTypes": [],
       "extendedClasses": [],
-      "extensionCode": "TypescriptClient/src/base-client.ts",
+      "extensionCode": "",
       "generateDefaultValues": true,
       "excludedTypeNames": [],
       "excludedParameterNames": [],
